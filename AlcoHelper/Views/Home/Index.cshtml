@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Witaj</h1>
+    <p>Dane alkoholu:</p>
+    <div id="alcoholInfo">
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var alcoholData = @Html.Raw(ViewBag.AlcoholData);
+        var alcoholInfoDiv = document.getElementById('alcoholInfo');
+
+        if (alcoholData) {
+            var formattedData = `
+                <p>ID: ${alcoholData.Id}</p>
+                <p>Nazwa: ${alcoholData.Name}</p>
+                <p>Recenzje:</p>
+                <ul>
+                    ${alcoholData.Reviews.map(review => `<li>Ocena: ${review.Rating}, Komentarz: ${review.Comment}</li>`).join('')}
+                </ul>
+            `;
+            alcoholInfoDiv.innerHTML = formattedData;
+        } else {
+            alcoholInfoDiv.innerHTML = '<p>Brak danych alkoholu.</p>';
+        }
+    });
+</script>

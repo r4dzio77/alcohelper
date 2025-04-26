@@ -1,0 +1,165 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Repos\\AlcoHelper\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\models\\alcohol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\models\\alcohol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\models\\alcoholstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\models\\alcoholstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\controllers\\alcoholcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\controllers\\alcoholcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\migrations\\20250415180119_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\migrations\\20250415180119_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\migrations\\20250415183542_allownullimageurl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\migrations\\20250415183542_allownullimageurl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|e:\\repos\\alcohelper\\alcohelper\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57B6C824-259A-4C8C-9576-885909A2726F}|AlcoHelper\\AlcoHelper.csproj|solutionrelative:alcohelper\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\appsettings.json",
+              "RelativeDocumentMoniker": "AlcoHelper\\appsettings.json",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\appsettings.json",
+              "RelativeToolTip": "AlcoHelper\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-15T18:43:41.366Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AlcoholStore.cs",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Models\\AlcoholStore.cs",
+              "RelativeDocumentMoniker": "AlcoHelper\\Models\\AlcoholStore.cs",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Models\\AlcoholStore.cs",
+              "RelativeToolTip": "AlcoHelper\\Models\\AlcoholStore.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:41:13.759Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20250415180119_InitialCreate.cs",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Migrations\\20250415180119_InitialCreate.cs",
+              "RelativeDocumentMoniker": "AlcoHelper\\Migrations\\20250415180119_InitialCreate.cs",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Migrations\\20250415180119_InitialCreate.cs",
+              "RelativeToolTip": "AlcoHelper\\Migrations\\20250415180119_InitialCreate.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:37:18.952Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20250415183542_AllowNullImageUrl.cs",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Migrations\\20250415183542_AllowNullImageUrl.cs",
+              "RelativeDocumentMoniker": "AlcoHelper\\Migrations\\20250415183542_AllowNullImageUrl.cs",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Migrations\\20250415183542_AllowNullImageUrl.cs",
+              "RelativeToolTip": "AlcoHelper\\Migrations\\20250415183542_AllowNullImageUrl.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:35:43.244Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Alcohol.cs",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Models\\Alcohol.cs",
+              "RelativeDocumentMoniker": "AlcoHelper\\Models\\Alcohol.cs",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Models\\Alcohol.cs",
+              "RelativeToolTip": "AlcoHelper\\Models\\Alcohol.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:33:28.392Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Program.cs",
+              "RelativeDocumentMoniker": "AlcoHelper\\Program.cs",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Program.cs",
+              "RelativeToolTip": "AlcoHelper\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:25:38.519Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "AlcoHelper\\Controllers\\HomeController.cs",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "AlcoHelper\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:24:26.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "AlcoHelper\\Views\\Home\\Index.cshtml",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "AlcoHelper\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-15T18:24:06.743Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AlcoholController.cs",
+              "DocumentMoniker": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Controllers\\AlcoholController.cs",
+              "RelativeDocumentMoniker": "AlcoHelper\\Controllers\\AlcoholController.cs",
+              "ToolTip": "E:\\Repos\\AlcoHelper\\AlcoHelper\\Controllers\\AlcoholController.cs",
+              "RelativeToolTip": "AlcoHelper\\Controllers\\AlcoholController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:23:02.565Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
