@@ -16,21 +16,20 @@ namespace AlcoHelper.Controllers
 
         public IActionResult Test()
         {
-            var alcohol = new Alcohol
+            var user = new User
             {
-                Id = 1,
-                Name = "Whisky Jack Daniel's",
-                //ImageUrl = "huhuhu", // Dodaj jakąś wartość dla ImageUrl
-                Reviews = new List<Review>
-                {
-                    new Review { Id = 1, Rating = 5, Comment = "Super whisky!" }
-                }
+                Username = "exampleUser",
+                Email = "user@example.com",
+                PasswordHash = "hashed_password", // Tu daj prawdziwy hash
+                ProfilePictureUrl = "url_to_picture", // Jeśli jest opcjonalne, to zostaw puste
+                Role = "User", // lub Admin, w zależności od roli
+                CreatedAt = DateTime.Now
             };
 
-            _context.Alcohols.Add(alcohol);
+            _context.Users.Add(user);
             _context.SaveChanges();
 
-            return Json(new { message = "Dodano alkohol do bazy danych." });
+            return Json(new { message = "Dodano uzytkownika do bazy danych." });
         }
     }
 }
