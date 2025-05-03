@@ -1,0 +1,48 @@
+﻿@model List<AlcoHelper.Models.Alcohol>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Witaj</h1>
+
+    <h2>Dostępne alkohole</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info">Brak zatwierdzonych alkoholi w bazie danych.</div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var alcohol in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(alcohol.ImageUrl))
+                        {
+                            <img src="@alcohol.ImageUrl"
+                                 class="card-img-top"
+                                 style="max-height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null;this.src='https://via.placeholder.com/300x200?text=Brak+zdjęcia';" />
+                        }
+                        else
+                        {
+                            <img src="https://via.placeholder.com/300x200?text=Brak+zdjęcia"
+                                 class="card-img-top"
+                                 style="max-height: 200px; object-fit: cover;" />
+                        }
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@alcohol.Name</h5>
+                            <p class="card-text"><strong>Typ:</strong> @alcohol.Type</p>
+                            <p class="card-text"><strong>Kraj:</strong> @alcohol.Country</p>
+                            <p class="card-text"><strong>Alkohol:</strong> @alcohol.AlcoholPercentage%</p>
+                            <p class="card-text"><strong>Opis:</strong> @alcohol.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
