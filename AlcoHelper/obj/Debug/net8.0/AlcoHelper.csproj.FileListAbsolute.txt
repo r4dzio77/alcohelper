@@ -149,7 +149,6 @@ C:\Users\Mateusz\Desktop\alcohelper\AlcoHelper\obj\Debug\net8.0\refint\AlcoHelpe
 C:\Users\Mateusz\Desktop\alcohelper\AlcoHelper\obj\Debug\net8.0\AlcoHelper.pdb
 C:\Users\Mateusz\Desktop\alcohelper\AlcoHelper\obj\Debug\net8.0\AlcoHelper.genruntimeconfig.cache
 C:\Users\Mateusz\Desktop\alcohelper\AlcoHelper\obj\Debug\net8.0\ref\AlcoHelper.dll
-C:\Users\Mateusz\Desktop\alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\user\Desktop\alcohelper-szelo\alcohelper-szelo\AlcoHelper\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\user\Desktop\alcohelper-szelo\alcohelper-szelo\AlcoHelper\bin\Debug\net8.0\appsettings.json
 C:\Users\user\Desktop\alcohelper-szelo\alcohelper-szelo\AlcoHelper\bin\Debug\net8.0\AlcoHelper.staticwebassets.runtime.json
@@ -301,3 +300,4 @@ C:\Users\user\Desktop\alcohelper-szelo\alcohelper-szelo\AlcoHelper\obj\Debug\net
 C:\Users\user\Desktop\alcohelper-szelo\alcohelper-szelo\AlcoHelper\obj\Debug\net8.0\AlcoHelper.genruntimeconfig.cache
 C:\Users\user\Desktop\alcohelper-szelo\alcohelper-szelo\AlcoHelper\obj\Debug\net8.0\ref\AlcoHelper.dll
 C:\Users\user\Desktop\alcohelper-szelo\alcohelper-szelo\AlcoHelper\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Mateusz\Desktop\alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
