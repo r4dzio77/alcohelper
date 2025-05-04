@@ -3,7 +3,6 @@
 
 <h2>Dodaj nowy alkohol</h2>
 
-@* Sekcja wyświetlająca błędy *@
 @if (!ViewData.ModelState.IsValid)
 {
     <div class="alert alert-danger">
@@ -14,7 +13,7 @@
     </div>
 }
 
-<form asp-controller="Alcohol" asp-action="Add" method="post">
+<form asp-controller="Alcohol" asp-action="Add" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Name">Nazwa</label>
         <input asp-for="Name" class="form-control" />
@@ -46,9 +45,9 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="ImageUrl">URL obrazka</label>
-        <input asp-for="ImageUrl" class="form-control" />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        <label>Obrazek</label>
+        <input type="file" name="ImageUrl" class="form-control" />
+        <span class="text-danger"></span> <!-- Tutaj nie ma model bindingu dla pliku -->
     </div>
 
     <button type="submit" class="btn btn-primary">Dodaj alkohol</button>

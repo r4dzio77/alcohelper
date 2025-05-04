@@ -25,7 +25,7 @@ namespace AlcoHelper.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddAlcoholViewModel model)
+        public IActionResult Add(AddAlcoholViewModel model, IFormFile ImageUrl)
         {
             var userName = HttpContext.Session.GetString("UserName");
             var role = HttpContext.Session.GetString("Role");
@@ -34,6 +34,29 @@ namespace AlcoHelper.Controllers
 
             if (ModelState.IsValid)
             {
+                string imageFilePath = null;
+
+                if (ImageUrl != null && ImageUrl.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    var fileName = Path.GetFileName(ImageUrl.FileName);
+                    var fullPath = Path.Combine(uploadsFolder, fileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        ImageUrl.CopyTo(stream);
+                    }
+
+                    // Tu najważniejsze: zapisujesz tylko ścieżkę względną
+                    imageFilePath = "/uploads/" + fileName;
+                }
+
+                // Tworzenie obiektu Alcohol
                 var alcohol = new Alcohol
                 {
                     Name = model.Name,
@@ -41,17 +64,19 @@ namespace AlcoHelper.Controllers
                     Country = model.Country,
                     AlcoholPercentage = model.AlcoholPercentage,
                     Description = model.Description,
-                    ImageUrl = model.ImageUrl,
+                    ImageUrl = imageFilePath, // Ścieżka do pliku obrazu
                     AddedDate = DateTime.Now,
-                    IsApproved = false, // Na starcie niezatwierdzony
+                    IsApproved = false // Na starcie niezatwierdzony
                 };
 
+                // Dodanie alkoholu do bazy danych
                 _context.Alcohols.Add(alcohol);
                 _context.SaveChanges();
 
                 TempData["Message"] = "Alkohol dodany! Czeka na zatwierdzenie przez admina.";
                 return RedirectToAction("Index", "Home");
             }
+
             return View(model);
         }
 
