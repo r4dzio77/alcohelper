@@ -5,7 +5,11 @@ using AlcoHelper.Data;
 using AlcoHelper.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Linq;
+using System.IO;
 
 namespace AlcoHelper.Controllers
 {
@@ -19,15 +23,37 @@ namespace AlcoHelper.Controllers
         }
 
         // Akcja dla formularza dodawania alkoholu
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             var tags = _context.Tags.ToList(); // Pobierz wszystkie tagi z bazy danych
             ViewBag.Tags = tags; // Przekaż tagi do widoku Add.cshtml
 
+            // Pobieranie krajów z zewnętrznego API
+            var countries = await GetCountries();
+            ViewBag.Countries = countries; // Przekaż kraje do widoku Add.cshtml
+
             return View();
         }
 
+        // Metoda do pobierania krajów z API
+        public async Task<List<string>> GetCountries()
+        {
+            var client = new HttpClient();
+            var response = await client.GetStringAsync("https://restcountries.com/v3.1/all");
+            var countries = JsonConvert.DeserializeObject<List<Country>>(response);
 
+            return countries.Select(c => c.Name.Common).ToList();
+        }
+
+        public class Country
+        {
+            public Name Name { get; set; }
+        }
+
+        public class Name
+        {
+            public string Common { get; set; }
+        }
 
         [HttpPost]
         public IActionResult Add(AddAlcoholViewModel model, IFormFile ImageUrl)
@@ -99,9 +125,6 @@ namespace AlcoHelper.Controllers
             return View(model); // Wróć do widoku z błędami, jeśli coś nie jest w porządku
         }
 
-
-
-
         public IActionResult PendingApproval()
         {
             var userName = HttpContext.Session.GetString("UserName");
@@ -120,9 +143,6 @@ namespace AlcoHelper.Controllers
 
             return View(pendingAlcohols);
         }
-
-
-
 
         [HttpPost]
         public IActionResult Approve(int id)
