@@ -111,4 +111,5 @@ public class AdminController : Controller
     {
         return _context.Alcohols.Any(e => e.Id == id);
     }
+
 }

@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AlcoHelper.styles.css" asp-append-version="true" />
+    <!-- Dodaj Select2  -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <style>
         .navbar-nav .nav-item {
             margin: 0;
@@ -31,6 +35,26 @@
             }
     </style>
     @RenderSection("Styles", required: false)
+
+    @* Dodanie stylów CSS dla tagów *@
+    <style>
+        /* Styl dla tagów */
+        .tags .badge {
+            background-color: #007bff; /* Ustaw tło tagu na niebieskie */
+            color: white; /* Kolor tekstu na biały */
+            padding: 5px 10px;
+            border-radius: 3px; /* Zaokrąglone rogi */
+            margin-right: 5px; /* Odstęp między tagami */
+            font-size: 14px; /* Rozmiar czcionki */
+            display: inline-block;
+        }
+
+            /* Styl tagów po najechaniu myszką */
+            .tags .badge:hover {
+                background-color: #0056b3; /* Zmiana koloru tła po najechaniu */
+                cursor: pointer; /* Zmieniamy kursor, aby pokazać, że tag jest klikalny */
+            }
+    </style>
 </head>
 <body>
     <header>

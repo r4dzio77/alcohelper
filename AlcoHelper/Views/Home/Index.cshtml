@@ -1,4 +1,5 @@
 ﻿@model List<AlcoHelper.Models.Alcohol>
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -7,6 +8,14 @@
     <h1 class="display-4">Witaj</h1>
 
     <h2>Dostępne alkohole</h2>
+
+    <!-- Formularz wyszukiwania -->
+    <form method="get" action="@Url.Action("Index", "Home")">
+        <div class="form-group">
+            <input type="text" class="form-control" name="searchTerm" placeholder="Wyszukaj po nazwie" value="@ViewBag.SearchTerm" />
+        </div>
+        <button type="submit" class="btn btn-primary">Szukaj</button>
+    </form>
 
     @if (Model == null || !Model.Any())
     {
@@ -39,6 +48,24 @@
                             <p class="card-text"><strong>Kraj:</strong> @alcohol.Country</p>
                             <p class="card-text"><strong>Alkohol:</strong> @alcohol.AlcoholPercentage%</p>
                             <p class="card-text"><strong>Opis:</strong> @alcohol.Description</p>
+
+                            <!-- Wyświetlanie tagów -->
+                            <div class="tags">
+                                @if (alcohol.AlcoholTags != null && alcohol.AlcoholTags.Any())
+                                {
+                                    <p>
+                                        <strong>Tagi:</strong>
+                                        @foreach (var alcoholTag in alcohol.AlcoholTags)
+                                        {
+                                            <span class="badge badge-secondary">@alcoholTag.Tag.Name</span>
+                                        }
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p><strong>Tagi:</strong> Brak tagów</p>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

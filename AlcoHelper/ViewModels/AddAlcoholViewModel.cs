@@ -23,5 +23,7 @@ namespace AlcoHelper.ViewModels
 
         [Url(ErrorMessage = "Podaj poprawny URL zdjęcia!")]
         public string? ImageUrl { get; set; }
+
+        public List<int> TagIds { get; set; }  // Lista wybranych tagów
     }
 }

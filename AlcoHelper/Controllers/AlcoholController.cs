@@ -18,11 +18,16 @@ namespace AlcoHelper.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        // Akcja dla formularza dodawania alkoholu
         public IActionResult Add()
         {
+            var tags = _context.Tags.ToList(); // Pobierz wszystkie tagi z bazy danych
+            ViewBag.Tags = tags; // Przekaż tagi do widoku Add.cshtml
+
             return View();
         }
+
+
 
         [HttpPost]
         public IActionResult Add(AddAlcoholViewModel model, IFormFile ImageUrl)
@@ -52,7 +57,7 @@ namespace AlcoHelper.Controllers
                         ImageUrl.CopyTo(stream);
                     }
 
-                    // Tu najważniejsze: zapisujesz tylko ścieżkę względną
+                    // Zapisujemy tylko ścieżkę względną
                     imageFilePath = "/uploads/" + fileName;
                 }
 
@@ -73,12 +78,29 @@ namespace AlcoHelper.Controllers
                 _context.Alcohols.Add(alcohol);
                 _context.SaveChanges();
 
+                // Zapisz wybrane tagi do tabeli pośredniczącej AlcoholTag
+                foreach (var tagId in model.TagIds)
+                {
+                    var alcoholTag = new AlcoholTag
+                    {
+                        AlcoholId = alcohol.Id,
+                        TagId = tagId
+                    };
+                    _context.AlcoholTags.Add(alcoholTag);
+                }
+
+                // Zapisz zmiany
+                _context.SaveChanges();
+
                 TempData["Message"] = "Alkohol dodany! Czeka na zatwierdzenie przez admina.";
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(model);
+            return View(model); // Wróć do widoku z błędami, jeśli coś nie jest w porządku
         }
+
+
+
 
         public IActionResult PendingApproval()
         {

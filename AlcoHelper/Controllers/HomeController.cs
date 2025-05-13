@@ -15,49 +15,51 @@ namespace AlcoHelper.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm)
         {
             var userName = HttpContext.Session.GetString("UserName");
             var role = HttpContext.Session.GetString("Role");
             ViewBag.UserName = userName;
             ViewBag.Role = role;
 
-            // Pobierz pierwszy alkohol z bazy wraz z recenzjami
-            var alcohol = _context.Alcohols
-                .Include(a => a.Reviews)
-                .FirstOrDefault();
+            ViewBag.SearchTerm = searchTerm;
+            // Pobieranie alkoholi z powi¹zanymi recenzjami i tagami
+            var approvedAlcohols = _context.Alcohols
+                .Include(a => a.Reviews)            // Za³adowanie recenzji alkoholu
+                .Include(a => a.AlcoholTags)        // Za³adowanie tagów
+                .ThenInclude(at => at.Tag)          // Za³adowanie samego tagu
+                .Where(a => a.IsApproved)           // Tylko zatwierdzone alkohole
+                .AsQueryable();
 
-            if (alcohol != null)
+            // Filtrujemy alkohole na podstawie nazwy, jeœli u¿ytkownik poda³ zapytanie w formularzu
+            if (!string.IsNullOrEmpty(searchTerm))
             {
-                // Przygotuj obiekt do przekazania do widoku
-                var alcoholData = new
+                approvedAlcohols = approvedAlcohols.Where(a => a.Name.Contains(searchTerm));
+            }
+
+            // Pobranie listy alkoholi po zastosowaniu filtrów
+            var alcoholList = approvedAlcohols.ToList();
+
+            // Przekazanie danych do widoku
+            ViewBag.AlcoholData = alcoholList.Select(alcohol => new
+            {
+                alcohol.Id,
+                alcohol.Name,
+                alcohol.Type,
+                alcohol.Country,
+                alcohol.AlcoholPercentage,
+                alcohol.Description,
+                alcohol.ImageUrl,
+                Reviews = alcohol.Reviews?.Select(r => new
                 {
-                    Id = alcohol.Id,
-                    Name = alcohol.Name ?? "Nieznana nazwa",
-                    Type = alcohol.Type ?? "Nieznany typ",
-                    Country = alcohol.Country ?? "Nieznany kraj",
-                    AlcoholPercentage = alcohol.AlcoholPercentage,
-                    Description = alcohol.Description ?? "Brak opisu",
-                    ImageUrl = alcohol.ImageUrl,
-                    Reviews = alcohol.Reviews?.Select(r => new
-                    {
-                        Rating = r.Rating,
-                        Comment = r.Comment ?? "Brak komentarza",
-                        CreatedAt = r.CreatedAt
-                    }).ToList()
-                };
+                    Rating = r.Rating,
+                    Comment = r.Comment ?? "Brak komentarza",
+                    CreatedAt = r.CreatedAt
+                }).ToList(),
+                Tags = alcohol.AlcoholTags.Select(at => at.Tag.Name).ToList() // Pobranie nazw tagów
+            }).ToList();
 
-                ViewBag.AlcoholData = JsonSerializer.Serialize(alcoholData);
-            }
-            else
-            {
-                // Jeœli brak alkoholi w bazie, przeka¿ pusty obiekt
-                ViewBag.AlcoholData = "null";
-            }
-            // Pobieranie alkoholi tylko zatwierdzonych
-            var approvedAlcohols = _context.Alcohols.Where(a => a.IsApproved).ToList();
-
-            return View(approvedAlcohols);  // Przekazywanie tylko zatwierdzonych alkoholi do widoku
+            return View(alcoholList);  // Przekazanie alkoholi z recenzjami i tagami do widoku
         }
     }
 }
