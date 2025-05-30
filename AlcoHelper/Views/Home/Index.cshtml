@@ -2,20 +2,56 @@
 
 @{
     ViewData["Title"] = "Home Page";
+
+    var selectedTagIds = ViewBag.SelectedTagIds as List<int> ?? new List<int>();
+    var tags = ViewBag.Tags as List<AlcoHelper.Models.Tag> ?? new List<AlcoHelper.Models.Tag>();
+    var sortOrder = ViewBag.SortOrder as string ?? "name_asc";
 }
 
 <div class="text-center">
     <h1 class="display-4">Witaj</h1>
-
     <h2>Dostępne alkohole</h2>
 
-    <!-- Formularz wyszukiwania -->
-    <form method="get" action="@Url.Action("Index", "Home")">
-        <div class="form-group">
-            <input type="text" class="form-control" name="searchTerm" placeholder="Wyszukaj po nazwie" value="@ViewBag.SearchTerm" />
-        </div>
+    <form method="get" action="@Url.Action("Index", "Home")" class="form-inline justify-content-center mb-3">
+        <input type="text"
+               class="form-control mr-2"
+               name="searchTerm"
+               placeholder="Wyszukaj po nazwie"
+               value="@ViewBag.SearchTerm"
+               style="width: 250px;" />
+
+        @Html.DropDownList("sortOrder", new List<SelectListItem>
+        {
+            new SelectListItem { Value = "name_asc", Text = "Nazwa rosnąco", Selected = sortOrder == "name_asc" },
+                new SelectListItem { Value = "name_desc", Text = "Nazwa malejąco", Selected = sortOrder == "name_desc" },
+                new SelectListItem { Value = "alcohol_asc", Text = "Alkohol rosnąco", Selected = sortOrder == "alcohol_asc" },
+                new SelectListItem { Value = "alcohol_desc", Text = "Alkohol malejąco", Selected = sortOrder == "alcohol_desc" }
+                }, new { @class = "form-control form-control-sm mr-2", style = "width: 160px;" })
+
         <button type="submit" class="btn btn-primary">Szukaj</button>
     </form>
+
+    <!-- Filtracja po tagach (checkboxy) poniżej formularza -->
+    <div class="text-left mb-4" style="max-width: 900px; margin: 0 auto;">
+        <strong>Filtruj po tagach:</strong>
+        <form method="get" action="@Url.Action("Index", "Home")">
+            @* Ukryte pola, żeby zachować searchTerm i sortOrder przy zmianie filtrów *@
+            <input type="hidden" name="searchTerm" value="@ViewBag.SearchTerm" />
+            <input type="hidden" name="sortOrder" value="@sortOrder" />
+
+            <div class="form-group d-flex flex-wrap">
+                @foreach (var tag in tags)
+                {
+                    <label class="mr-3 mb-2">
+                        <input type="checkbox" name="selectedTagIds" value="@tag.Id"
+                               @(selectedTagIds.Contains(tag.Id) ? "checked" : "") />
+                        @tag.Name
+                    </label>
+                }
+            </div>
+            <button type="submit" class="btn btn-secondary btn-sm">Filtruj</button>
+        </form>
+    </div>
 
     @if (Model == null || !Model.Any())
     {
@@ -49,7 +85,6 @@
                             <p class="card-text"><strong>Alkohol:</strong> @alcohol.AlcoholPercentage%</p>
                             <p class="card-text"><strong>Opis:</strong> @alcohol.Description</p>
 
-                            <!-- Wyświetlanie tagów -->
                             <div class="tags">
                                 @if (alcohol.AlcoholTags != null && alcohol.AlcoholTags.Any())
                                 {

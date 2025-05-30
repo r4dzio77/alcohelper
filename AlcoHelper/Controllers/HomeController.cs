@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using AlcoHelper.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 using AlcoHelper.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AlcoHelper.Controllers
 {
@@ -15,7 +16,7 @@ namespace AlcoHelper.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string searchTerm)
+        public IActionResult Index(string searchTerm = null, List<int> selectedTagIds = null, string sortOrder = null)
         {
             var userName = HttpContext.Session.GetString("UserName");
             var role = HttpContext.Session.GetString("Role");
@@ -23,24 +24,45 @@ namespace AlcoHelper.Controllers
             ViewBag.Role = role;
 
             ViewBag.SearchTerm = searchTerm;
-            // Pobieranie alkoholi z powi¹zanymi recenzjami i tagami
+            ViewBag.SelectedTagIds = selectedTagIds ?? new List<int>();
+            ViewBag.SortOrder = sortOrder ?? "name_asc";
+
             var approvedAlcohols = _context.Alcohols
-                .Include(a => a.Reviews)            // Za³adowanie recenzji alkoholu
-                .Include(a => a.AlcoholTags)        // Za³adowanie tagów
-                .ThenInclude(at => at.Tag)          // Za³adowanie samego tagu
-                .Where(a => a.IsApproved)           // Tylko zatwierdzone alkohole
+                .Include(a => a.Reviews)
+                .Include(a => a.AlcoholTags)
+                .ThenInclude(at => at.Tag)
+                .Where(a => a.IsApproved)
                 .AsQueryable();
 
-            // Filtrujemy alkohole na podstawie nazwy, jeœli u¿ytkownik poda³ zapytanie w formularzu
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 approvedAlcohols = approvedAlcohols.Where(a => a.Name.Contains(searchTerm));
             }
 
-            // Pobranie listy alkoholi po zastosowaniu filtrów
+            if (selectedTagIds != null && selectedTagIds.Any())
+            {
+                approvedAlcohols = approvedAlcohols.Where(a => a.AlcoholTags.Any(at => selectedTagIds.Contains(at.TagId)));
+            }
+
+            // Sortowanie wg sortOrder
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    approvedAlcohols = approvedAlcohols.OrderByDescending(a => a.Name);
+                    break;
+                case "alcohol_asc":
+                    approvedAlcohols = approvedAlcohols.OrderBy(a => a.AlcoholPercentage);
+                    break;
+                case "alcohol_desc":
+                    approvedAlcohols = approvedAlcohols.OrderByDescending(a => a.AlcoholPercentage);
+                    break;
+                default: // name_asc
+                    approvedAlcohols = approvedAlcohols.OrderBy(a => a.Name);
+                    break;
+            }
+
             var alcoholList = approvedAlcohols.ToList();
 
-            // Przekazanie danych do widoku
             ViewBag.AlcoholData = alcoholList.Select(alcohol => new
             {
                 alcohol.Id,
@@ -56,10 +78,12 @@ namespace AlcoHelper.Controllers
                     Comment = r.Comment ?? "Brak komentarza",
                     CreatedAt = r.CreatedAt
                 }).ToList(),
-                Tags = alcohol.AlcoholTags.Select(at => at.Tag.Name).ToList() // Pobranie nazw tagów
+                Tags = alcohol.AlcoholTags.Select(at => at.Tag.Name).ToList()
             }).ToList();
 
-            return View(alcoholList);  // Przekazanie alkoholi z recenzjami i tagami do widoku
+            ViewBag.Tags = _context.Tags.ToList();
+
+            return View(alcoholList);
         }
     }
 }
