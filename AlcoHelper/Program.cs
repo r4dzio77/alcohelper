@@ -16,8 +16,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {
-        options.LoginPath = "/Account/Login";              // Œcie¿ka do logowania
-        options.AccessDeniedPath = "/Account/AccessDenied"; // Œcie¿ka gdy brak dostêpu
+        options.LoginPath = "/Account/Login";              // ï¿½cieï¿½ka do logowania
+        options.AccessDeniedPath = "/Account/AccessDenied"; // ï¿½cieï¿½ka gdy brak dostï¿½pu
     });
 
 builder.Services.AddAuthorization();
@@ -25,10 +25,9 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<AlcoholController>();
 
-// Dodanie DbContext z MySQL
+
 builder.Services.AddDbContext<AlcoHelperContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 42))));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -45,7 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Uwierzytelnianie i autoryzacja – w tej kolejnoœci!
+// Uwierzytelnianie i autoryzacja ï¿½ w tej kolejnoï¿½ci!
 app.UseAuthentication();
 app.UseAuthorization();
 
