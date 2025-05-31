@@ -25,24 +25,39 @@ namespace AlcoHelper.Controllers
         // Akcja dla formularza dodawania alkoholu
         public async Task<IActionResult> Add()
         {
-            var tags = _context.Tags.ToList(); // Pobierz wszystkie tagi z bazy danych
-            ViewBag.Tags = tags; // Przekaż tagi do widoku Add.cshtml
-
-            // Pobieranie krajów z zewnętrznego API
-            var countries = await GetCountries();
-            ViewBag.Countries = countries; // Przekaż kraje do widoku Add.cshtml
-
+            var tags = _context.Tags?
+                .OrderBy(t => t.Name)
+                .ToList() ?? new List<Tag>();
+            
+            var countries = (await GetCountries()) ?? new List<string>();
+            
+            ViewBag.Tags = tags;
+            ViewBag.Countries = countries;
+            
             return View();
-        }
+        }   
 
         // Metoda do pobierania krajów z API
         public async Task<List<string>> GetCountries()
         {
-            var client = new HttpClient();
-            var response = await client.GetStringAsync("https://restcountries.com/v3.1/all");
-            var countries = JsonConvert.DeserializeObject<List<Country>>(response);
-
-            return countries.Select(c => c.Name.Common).ToList();
+            try 
+            {
+                using var client = new HttpClient();
+                var response = await client.GetStringAsync("https://restcountries.com/v3.1/all");
+                var countries = JsonConvert.DeserializeObject<List<Country>>(response);
+                
+                return countries?
+                    .Where(c => c?.Name?.Common != null)
+                    .Select(c => c.Name.Common)
+                    .OrderBy(name => name)
+                    .ToList() ?? new List<string>();
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                Console.WriteLine($"Error fetching countries: {ex.Message}");
+                return new List<string> { "Polska", "Niemcy", "Francja" }; // Fallback list
+            }
         }
 
         public class Country

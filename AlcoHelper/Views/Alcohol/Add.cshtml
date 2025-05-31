@@ -18,9 +18,15 @@
         <label for="Country">Kraj</label>
         <select class="form-control" id="Country" name="Country" required>
             <option value="">Wybierz kraj</option>
-            @foreach (var country in ViewBag.Countries as List<string>)
-            {
-                <option value="@country">@country</option>
+            @{
+                var countries = ViewBag.Countries as List<string> ?? new List<string>();
+                foreach (var country in countries)
+                {
+                    if (!string.IsNullOrEmpty(country))
+                    {
+                        <option value="@country">@country</option>
+                    }
+                }
             }
         </select>
     </div>
