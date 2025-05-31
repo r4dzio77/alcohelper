@@ -4,13 +4,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\AlcoHelper.10rxc3pety.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"10rxc3pety"},{"Name":"integrity","Value":"sha256-D3Hvx9IxCB3UWTV\u002BpCRS1m1KyL9FrDroGIa08BoxsJI="},{"Name":"label","Value":"_content/AlcoHelper/AlcoHelper.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1128"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022D3Hvx9IxCB3UWTV\u002BpCRS1m1KyL9FrDroGIa08BoxsJI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 11:23:38 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1128"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022D3Hvx9IxCB3UWTV\u002BpCRS1m1KyL9FrDroGIa08BoxsJI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 13:02:50 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/AlcoHelper/AlcoHelper.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\AlcoHelper.10rxc3pety.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-D3Hvx9IxCB3UWTV\u002BpCRS1m1KyL9FrDroGIa08BoxsJI="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1128"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022D3Hvx9IxCB3UWTV\u002BpCRS1m1KyL9FrDroGIa08BoxsJI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 11:23:38 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1128"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022D3Hvx9IxCB3UWTV\u002BpCRS1m1KyL9FrDroGIa08BoxsJI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 13:02:50 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/AlcoHelper/css/site.c2tiyv64ts.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>

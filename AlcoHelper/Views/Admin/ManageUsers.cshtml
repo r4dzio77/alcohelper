@@ -1,33 +1,56 @@
-@model List<AlcoHelper.Models.User>
+@model AlcoHelper.ViewModels.UserRolesViewModel
 
-@{
-    ViewBag.Title = "Zarządzanie Użytkownikami";
+<h2>Zarządzaj użytkownikami</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" id="success-msg">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" id="error-msg">@TempData["Error"]</div>
 }
 
-<h2>Zarządzaj Użytkownikami</h2>
+<form method="post" action="@Url.Action("UpdateUserRoles", "Admin")">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Rola</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <div class="form-group">
+                            <select class="form-control" name="RolesForUsers[@user.Id]" required>
+                            @foreach (var role in Model.Roles)
+                            {
+                                if(role.Id == user.RoleId)
+                                {
+                                    <option value="@role.Id" selected="selected">@role.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@role.Id">@role.Name</option>
+                                }
+                            }
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DeleteUser", "Admin", new { id = user.Id })" class="btn btn-danger btn-sm">Usuń</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Login</th>
-            <th>Email</th>
-            <th>Rola</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var user in Model)
-    {
-        <tr>
-            <td>@user.Username</td>
-            <td>@user.Email</td>
-            <td>@user.RoleId</td>
-            <td>
-                <!-- Tu możesz potem wrzucić edycję albo usuwanie -->
-                <a href="@Url.Action("EditUser", "Admin", new { id = user.Id })" class="btn btn-sm btn-warning">Edytuj</a>
-                <a href="@Url.Action("DeleteUser", "Admin", new { id = user.Id })" class="btn btn-sm btn-danger">Usuń</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+</form>

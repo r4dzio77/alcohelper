@@ -3,6 +3,7 @@ using AlcoHelper.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AlcoHelper.ViewModels;
 public class AdminController : Controller
 {
     private readonly AlcoHelperContext _context;
@@ -35,14 +36,53 @@ public class AdminController : Controller
 
         if (role != "Admin")
         {
-            return View("AccessDenied");
+            return RedirectToAction("AccessDenied", "Account");
         }
 
         var users = _context.Users.ToList(); // zakładając, że masz DbSet<Users>
+        var roles = _context.Roles.ToList();
 
-        return View(users);
+        var model = new UserRolesViewModel {
+            Users = users,
+            Roles = roles
+        };
+
+        return View(model);
     }
+    
+    [HttpPost]
+    public IActionResult UpdateUserRoles(Dictionary<int, int> RolesForUsers)
+    {
+        var currentUserId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
+        
+        if (RolesForUsers == null || !RolesForUsers.Any())
+        {
+            TempData["Error"] = "Brak danych do aktualizacji.";
+            return RedirectToAction("ManageUsers");
+        }
 
+        foreach (var entry in RolesForUsers)
+        {
+            var userId = entry.Key;
+            var newRoleId = entry.Value;
+
+            if (userId == currentUserId)
+            {
+                continue;
+            }
+
+            var user = _context.Users.Find(userId);
+            if (user != null)
+            {
+                user.RoleId = newRoleId;
+            }
+        }
+
+        _context.SaveChanges();
+
+        TempData["Success"] = "Role użytkowników zostały zaktualizowane.";
+        return RedirectToAction("ManageUsers");
+    }
 
     // Lista wszystkich alkoholi
     public async Task<IActionResult> Index()

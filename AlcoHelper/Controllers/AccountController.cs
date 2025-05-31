@@ -73,7 +73,9 @@ public class AccountController : Controller
 
             HttpContext.Session.SetString("UserName", user.Username);
             HttpContext.Session.SetString("Role", roleName);
+            HttpContext.Session.SetString("UserId", user.Id.ToString());
             Console.WriteLine($"[DEBUG] Session 'Role' ustawione na: {roleName}");
+            Console.WriteLine($"[DEBUG] user.RoleId = {user.RoleId}");
             return RedirectToAction("Index", "Home");
         }
 

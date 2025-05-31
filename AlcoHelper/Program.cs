@@ -25,7 +25,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<AlcoholController>();
 
-
 builder.Services.AddDbContext<AlcoHelperContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -51,5 +50,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+    
+builder.Services.AddHttpClient<OpenAIService>();
 
 app.Run();
