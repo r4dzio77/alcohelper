@@ -9,7 +9,7 @@ namespace AlcoHelper.Models
         public string? Email { get; set; }
         public string? PasswordHash { get; set; }
         public string? ProfilePictureUrl { get; set; }
-        public string? Role { get; set; }
+        public int RoleId { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public List<Review>? Reviews { get; set; }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "gZmtejkOY05mO4GQd0ychaHoqJhy5ZlvPrP9nQjOtcc=",
+  "Hash": "1Jg8vuRJwMRbShTK1vqH/4IwBrOkbIeTjYXOlMo9Ow0=",
   "Source": "AlcoHelper",
   "BasePath": "_content/AlcoHelper",
   "Mode": "Default",
@@ -1380,6 +1380,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\il_570xN.4572809448_d2il.png"
+    },
+    {
+      "Identity": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\obraz_2025-05-31_140438522.png",
+      "SourceId": "AlcoHelper",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\",
+      "BasePath": "_content/AlcoHelper",
+      "RelativePath": "uploads/obraz_2025-05-31_140438522#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7gkb4ar1cn",
+      "Integrity": "RxgWu0Pb2n4bya9EfE0k0+2ZveGlfm7mBzQSCUP2weI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\obraz_2025-05-31_140438522.png"
     },
     {
       "Identity": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\singleton_12.jpeg",
@@ -6731,6 +6752,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-Z/1fk8tKAWVTbbfY3Nwas47kSWR0KR6LB2zBKoNq7Aw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/obraz_2025-05-31_140438522.7gkb4ar1cn.png",
+      "AssetFile": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\obraz_2025-05-31_140438522.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "71650"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RxgWu0Pb2n4bya9EfE0k0+2ZveGlfm7mBzQSCUP2weI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 12:04:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7gkb4ar1cn"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/obraz_2025-05-31_140438522.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-RxgWu0Pb2n4bya9EfE0k0+2ZveGlfm7mBzQSCUP2weI="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/obraz_2025-05-31_140438522.png",
+      "AssetFile": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\obraz_2025-05-31_140438522.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "71650"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RxgWu0Pb2n4bya9EfE0k0+2ZveGlfm7mBzQSCUP2weI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 12:04:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-RxgWu0Pb2n4bya9EfE0k0+2ZveGlfm7mBzQSCUP2weI="
         }
       ]
     },

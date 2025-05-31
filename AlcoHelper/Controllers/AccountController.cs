@@ -41,7 +41,7 @@ public class AccountController : Controller
                 Email = model.Email,
                 PasswordHash = model.Password, // Uwaga: powinieneś hashować hasło!
                 CreatedAt = DateTime.Now,
-                Role = "User"
+                RoleId = 2
             };
 
             _context.Users.Add(user);
@@ -66,8 +66,14 @@ public class AccountController : Controller
                 return View(model); // Zwracamy model, aby zachować wprowadzone dane
             }
 
+            var roleName = _context.Roles
+                .Where(r => r.Id == user.RoleId)
+                .Select(r => r.Name)
+                .FirstOrDefault() ?? "Unknown";
+
             HttpContext.Session.SetString("UserName", user.Username);
-            HttpContext.Session.SetString("Role", user.Role);
+            HttpContext.Session.SetString("Role", roleName);
+            Console.WriteLine($"[DEBUG] Session 'Role' ustawione na: {roleName}");
             return RedirectToAction("Index", "Home");
         }
 

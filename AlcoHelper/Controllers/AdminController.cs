@@ -28,6 +28,20 @@ public class AdminController : Controller
         return View();
     }
 
+    [HttpGet]
+    public IActionResult ManageUsers()
+    {
+        var role = HttpContext.Session.GetString("Role");
+
+        if (role != "Admin")
+        {
+            return View("AccessDenied");
+        }
+
+        var users = _context.Users.ToList(); // zakładając, że masz DbSet<Users>
+
+        return View(users);
+    }
 
 
     // Lista wszystkich alkoholi

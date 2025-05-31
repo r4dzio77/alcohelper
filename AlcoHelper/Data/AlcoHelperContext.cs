@@ -18,6 +18,7 @@ namespace AlcoHelper.Data // Możesz zmienić przestrzeń nazw, jeśli wolisz in
         public DbSet<FavoriteAlco> FavoriteAlcos { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<User> Users { get; set; }
@@ -85,9 +86,9 @@ namespace AlcoHelper.Data // Możesz zmienić przestrzeń nazw, jeśli wolisz in
 
             // Konfiguracja relacji jeden-do-wielu między User a WishList
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Wishlist)
-                .WithOne(wl => wl.User)
-                .HasForeignKey(wl => wl.UserId);
+                .HasOne<Role>()
+                .WithMany()
+                .HasForeignKey(u => u.RoleId);
 
             // Konfiguracja relacji wiele-do-jednego między Comment a User
             modelBuilder.Entity<Comment>()
