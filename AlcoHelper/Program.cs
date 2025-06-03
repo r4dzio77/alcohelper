@@ -30,7 +30,6 @@ builder.Services.AddDbContext<AlcoHelperContext>(options =>
 
 var app = builder.Build();
 
-app.UseSession();
 
 if (!app.Environment.IsDevelopment())
 {
@@ -43,6 +42,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
+
 // Uwierzytelnianie i autoryzacja � w tej kolejno�ci!
 app.UseAuthentication();
 app.UseAuthorization();
@@ -50,7 +51,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-    
-builder.Services.AddHttpClient<OpenAIService>();
 
 app.Run();

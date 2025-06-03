@@ -108,3 +108,21 @@
         </div>
     }
 </div>
+<hr />
+<h3>Nie wiesz co wybrać? Zapytaj naszego sommeliera!</h3>
+
+<form method="post" action="@Url.Action("Index", "Chat")" class="mb-3">
+    <div class="form-group">
+        <textarea name="userMessage" class="form-control" rows="3" placeholder="Opisz swoje preferencje..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Zadaj pytanie</button>
+</form>
+
+@if (ViewBag.UserMessage != null && ViewBag.BotResponse != null)
+{
+    <div class="alert alert-secondary">
+        <strong>Ty:</strong> @ViewBag.UserMessage
+        <br />
+        <strong>Sommelier:</strong> @Html.Raw(ViewBag.BotResponse.Replace("\n", "<br />"))
+    </div>
+}
