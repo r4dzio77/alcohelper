@@ -75,6 +75,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "itext.bouncy-castle-adapter": {
+              "target": "Package",
+              "version": "[9.2.0, )"
+            },
+            "itext7": {
+              "target": "Package",
+              "version": "[9.2.0, )"
             }
           },
           "imports": [

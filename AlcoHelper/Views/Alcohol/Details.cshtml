@@ -1,0 +1,20 @@
+﻿@model AlcoHelper.Models.Alcohol
+
+<h2>@Model.Name</h2>
+<p><strong>Typ:</strong> @Model.Type</p>
+<p><strong>Kraj:</strong> @Model.Country</p>
+<p><strong>Alkohol:</strong> @Model.AlcoholPercentage%</p>
+<p><strong>Opis:</strong> @Model.Description</p>
+
+<!-- Dodanie obrazu, jeśli dostępny -->
+@if (!string.IsNullOrEmpty(Model.ImageUrl))
+{
+    <img src="@Model.ImageUrl" class="img-fluid" />
+}
+else
+{
+    <img src="https://via.placeholder.com/300x200?text=Brak+zdjęcia" class="img-fluid" />
+}
+
+<!-- Przycisk do pobrania PDF -->
+<a href="@Url.Action("DownloadPDF", "Alcohol", new { id = Model.Id })" class="btn btn-primary mt-3">Pobierz PDF</a>

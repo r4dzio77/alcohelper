@@ -48,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxjb2hvbFxBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Repos/Alcohelper/AlcoHelper/Views/Alcohol/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxjb2hvbFxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Repos/Alcohelper/AlcoHelper/Views/Alcohol/PendingApproval.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxjb2hvbFxQZW5kaW5nQXBwcm92YWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

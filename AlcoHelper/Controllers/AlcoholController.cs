@@ -11,16 +11,20 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
 
+
 namespace AlcoHelper.Controllers
 {
     public class AlcoholController : Controller
     {
         private readonly AlcoHelperContext _context;
+        private readonly PDFGenerator _pdfGenerator;
 
-        public AlcoholController(AlcoHelperContext context)
+        public AlcoholController(AlcoHelperContext context, PDFGenerator pdfGenerator)
         {
             _context = context;
+            _pdfGenerator = pdfGenerator ?? throw new ArgumentNullException(nameof(pdfGenerator));
         }
+
 
         // Akcja dla formularza dodawania alkoholu
         public async Task<IActionResult> Add()
@@ -191,6 +195,33 @@ namespace AlcoHelper.Controllers
 
             TempData["Message"] = "Alkohol odrzucony!";
             return RedirectToAction("PendingApproval");  // Po odrzuceniu wracamy do listy oczekujących alkoholi
+        }
+
+        public IActionResult Details(int id)
+        {
+            var alcohol = _context.Alcohols.Find(id);
+            if (alcohol == null)
+            {
+                return NotFound();
+            }
+
+            return View(alcohol);  // Widok szczegółów alkoholu
+        }
+
+        // Akcja generująca PDF i zwracająca go do pobrania
+        public IActionResult DownloadPDF(int id)
+        {
+            var alcohol = _context.Alcohols.Find(id);
+            if (alcohol == null)
+            {
+                return NotFound();
+            }
+
+            // Generujemy PDF za pomocą _pdfGenerator
+            var pdfData = _pdfGenerator.GenerateAlcoholPDF(alcohol);
+
+            // Zwracamy plik PDF do pobrania
+            return File(pdfData, "application/pdf", $"{alcohol.Name}.pdf");
         }
     }
 }
