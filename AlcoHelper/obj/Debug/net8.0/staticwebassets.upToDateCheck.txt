@@ -61,4 +61,6 @@ wwwroot\lib\jquery\LICENSE.txt
 wwwroot\uploads\475132500_1357849058862837_2904143170940179664_n.png
 wwwroot\uploads\486496111_1193028239274387_2102998077581773338_n.png
 wwwroot\uploads\il_570xN.4572809448_d2il.png
+wwwroot\uploads\obraz_2025-05-31_140438522.png
+wwwroot\uploads\profesjonalna-degustacja-wina.jpg
 wwwroot\uploads\singleton_12.jpeg

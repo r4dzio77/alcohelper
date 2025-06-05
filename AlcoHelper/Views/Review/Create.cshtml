@@ -1,0 +1,36 @@
+﻿@model AlcoHelper.Models.Review
+
+@{
+    ViewData["Title"] = "Dodaj recenzję";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.Alcohol == null)
+{
+    <div class="alert alert-danger">
+        <strong>Błąd:</strong> Nie znaleziono alkoholu, do którego próbujesz dodać recenzję.
+    </div>
+}
+else
+{
+    <h4>Recenzujesz: @ViewBag.Alcohol.Name</h4>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="Rating">Ocena (1-5):</label>
+            <input type="number" name="Rating" class="form-control" min="1" max="5" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Comment">Komentarz:</label>
+            <textarea name="Comment" class="form-control" rows="5" required></textarea>
+        </div>
+
+        <!-- Ukryte pole z AlcoholId -->
+        <input type="hidden" name="AlcoholId" value="@ViewBag.Alcohol.Id" />
+
+        <button type="submit" class="btn btn-primary">Zapisz recenzję</button>
+    </form>
+
+}

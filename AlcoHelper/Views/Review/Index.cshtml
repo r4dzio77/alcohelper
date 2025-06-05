@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AlcoHelper.Models.Review>
+
+@{
+    ViewData["Title"] = "Recenzje";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ocena</th>
+            <th>Komentarz</th>
+            <th>Użytkownik</th>
+            <th>Data utworzenia</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>@review.Rating</td>
+                <td>@review.Comment</td>
+                <td>@review.User?.Username</td>
+                <td>@review.CreatedAt.ToString("dd-MM-yyyy")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Review", new { id = review.Id })" class="btn btn-info">Zobacz szczegóły</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

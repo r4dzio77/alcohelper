@@ -1,4 +1,4 @@
-﻿@model List<AlcoHelper.Models.Alcohol>
+@model List<AlcoHelper.Models.Alcohol>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -12,6 +12,10 @@
     <h1 class="display-4">Witaj</h1>
     <h2>Dostępne alkohole</h2>
 
+    <!-- Przycisk Forum obok "Dodaj alkohol" -->
+    <a href="@Url.Action("Index", "Review")" class="btn btn-secondary mb-3">Forum - Wszystkie recenzje</a>
+
+    <!-- Formularz wyszukiwania i filtracji -->
     <form method="get" action="@Url.Action("Index", "Home")" class="form-inline justify-content-center mb-3">
         <input type="text"
                class="form-control mr-2"
@@ -101,6 +105,10 @@
                                     <p><strong>Tagi:</strong> Brak tagów</p>
                                 }
                             </div>
+
+                            <!-- Przycisk do dodania recenzji dla tego alkoholu -->
+                            <a href="@Url.Action("Create", "Review", new { alcoholId = alcohol.Id })" class="btn btn-primary mt-3">Dodaj recenzję</a>
+
                         </div>
                     </div>
                 </div>
@@ -108,7 +116,9 @@
         </div>
     }
 </div>
+
 <hr />
+
 <h3>Nie wiesz co wybrać? Zapytaj naszego sommeliera!</h3>
 
 <form method="post" action="@Url.Action("Index", "Chat")" class="mb-3">

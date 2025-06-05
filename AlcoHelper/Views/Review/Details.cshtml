@@ -1,0 +1,15 @@
+﻿<h2>@Model.Alcohol.Name</h2>
+<p>Ocena: @Model.Rating</p>
+<p>@Model.Comment</p>
+
+<h3>Komentarze</h3>
+@foreach (var comment in ViewBag.Comments)
+{
+    <p>@comment.Content - @comment.User.Username (dodano: @comment.CreatedAt)</p>
+}
+
+<form method="post" asp-action="AddComment">
+    <textarea name="content" placeholder="Dodaj komentarz"></textarea>
+    <input type="hidden" name="reviewId" value="@Model.Id" />
+    <button type="submit">Dodaj komentarz</button>
+</form>
