@@ -74,6 +74,16 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Alcohol" asp-action="Add">Dodaj Alkohol</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Recenzje</a>
+                            </li>
+                            
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="AccountSettings" asp-action="Index">Ustawienia konta</a>
+                                </li>
+                            
+
+
                             @if (Context.Session.GetString("Role") == "Admin")
                             {
                                 <li class="nav-item">

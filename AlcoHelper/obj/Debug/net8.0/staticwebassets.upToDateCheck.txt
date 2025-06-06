@@ -58,5 +58,7 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\uploads\5cc90393-5029-473f-a25f-2ff0792b4734.jpg
+wwwroot\uploads\69941f4f-ad71-4897-8e1a-16da7e4638d6.png
 wwwroot\uploads\profesjonalna-degustacja-wina.jpg
 wwwroot\uploads\singleton_12.jpeg

@@ -1,10 +1,12 @@
 ﻿using AlcoHelper.Models;
-using Org.BouncyCastle.Crypto;
+using iText.IO.Image;
+using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
-using iText.IO.Image;
+using System;
 using System.IO;
 
 public class PDFGenerator
@@ -17,25 +19,43 @@ public class PDFGenerator
             var pdf = new PdfDocument(writer);
             var document = new Document(pdf);
 
-            // Wczytanie czcionki (pogrubionej) z pliku .ttf lub .otf
             var boldFont = PdfFontFactory.CreateFont("Helvetica-Bold");
 
-            // Dodawanie pogrubionego tekstu
             document.Add(new Paragraph(new Text($"Nazwa: {alcohol.Name}").SetFont(boldFont).SetFontSize(18)));
-
-            // Dodajemy inne informacje o alkoholu
             document.Add(new Paragraph($"Opis: {alcohol.Description}").SetFontSize(12));
             document.Add(new Paragraph($"Procent alkoholu: {alcohol.AlcoholPercentage}%").SetFontSize(12));
             document.Add(new Paragraph($"Kraj: {alcohol.Country}").SetFontSize(12));
 
-            // Dodajemy zdjęcie, jeśli istnieje
             if (!string.IsNullOrEmpty(alcohol.ImageUrl))
             {
                 try
                 {
-                    var image = ImageDataFactory.Create(alcohol.ImageUrl);
-                    var img = new Image(image);
-                    document.Add(img.SetWidth(200).SetHeight(200)); // Ustalamy rozmiar obrazu
+                    byte[] imageBytes;
+
+                    if (alcohol.ImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                    {
+                        using var httpClient = new System.Net.Http.HttpClient();
+                        imageBytes = httpClient.GetByteArrayAsync(alcohol.ImageUrl).Result;
+                    }
+                    else
+                    {
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", alcohol.ImageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+                        imageBytes = File.ReadAllBytes(path);
+                    }
+
+                    var imageData = ImageDataFactory.Create(imageBytes);
+                    var img = new Image(imageData);
+
+                    // Formatowanie obrazu: rozmiar, marginesy, ramka, wyśrodkowanie
+                    img.SetWidth(200)
+                       .SetHeight(200)
+                       .SetMarginTop(10)
+                       .SetMarginBottom(10)
+                       .SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER)
+                       .SetBorder((new SolidBorder(ColorConstants.BLACK, 1))
+);
+
+                    document.Add(img);
                 }
                 catch (Exception)
                 {
@@ -43,10 +63,8 @@ public class PDFGenerator
                 }
             }
 
-            // Zakończenie dokumentu
             document.Close();
 
-            // Zwracamy dane PDF w postaci bajtów
             return memoryStream.ToArray();
         }
     }

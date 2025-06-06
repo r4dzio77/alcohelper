@@ -36,8 +36,10 @@ namespace AlcoHelper.Controllers
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                approvedAlcohols = approvedAlcohols.Where(a => a.Name.Contains(searchTerm));
+                var lowerSearchTerm = searchTerm.ToLower();
+                approvedAlcohols = approvedAlcohols.Where(a => a.Name.ToLower().Contains(lowerSearchTerm));
             }
+
 
             if (selectedTagIds != null && selectedTagIds.Any())
             {
