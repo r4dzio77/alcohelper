@@ -591,7 +591,6 @@ E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.build.json
 E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.build.json.cache
 E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.development.json
 E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\AlcoHelper.csproj.Up2Date
 E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\AlcoHelper.dll
 E:\Repos\alcohelper\AlcoHelper\obj\Debug\net8.0\refint\AlcoHelper.dll
@@ -816,3 +815,4 @@ E:\Repos\AlcoHelper\AlcoHelper\bin\Debug\net8.0\System.Text.Json.dll
 E:\Repos\AlcoHelper\AlcoHelper\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 E:\Repos\Alcohelper\AlcoHelper\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 E:\Repos\Alcohelper\AlcoHelper\bin\Debug\net8.0\itext.bouncy-castle-adapter.dll
+E:\Repos\Alcohelper\AlcoHelper\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

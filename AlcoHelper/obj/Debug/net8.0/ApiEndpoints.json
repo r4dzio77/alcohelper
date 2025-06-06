@@ -2,7 +2,7 @@
   {
     "ContainingType": "AlcoHelper.Controllers.Api.AlcoholsApiController",
     "Method": "GetAlcohols",
-    "RelativePath": "api/AlcoholsApi",
+    "RelativePath": "api/alcohols",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -22,17 +22,7 @@
   {
     "ContainingType": "AlcoHelper.Controllers.Api.AlcoholsApiController",
     "Method": "Ping",
-    "RelativePath": "api/AlcoholsApi/ping",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AlcoHelper.Controllers.TestController",
-    "Method": "Ping",
-    "RelativePath": "api/test/ping",
+    "RelativePath": "api/alcohols/ping",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

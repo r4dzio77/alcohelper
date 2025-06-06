@@ -1,5 +1,6 @@
 using AlcoHelper.Controllers;
 using AlcoHelper.Data;
+using AlcoHelper.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,9 @@ builder.Services.AddAuthentication("Cookies")
     });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<EmailService>();
+
 
 // 🔹 Rejestracja MVC i API
 builder.Services.AddControllersWithViews();

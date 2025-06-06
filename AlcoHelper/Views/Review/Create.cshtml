@@ -14,23 +14,28 @@
 }
 else
 {
-    <h4>Recenzujesz: @ViewBag.Alcohol.Name</h4>
+    <h4>Recenzujesz: <strong>@ViewBag.Alcohol.Name</strong></h4>
 
     <form method="post">
+        @* Ukryte pole z AlcoholId – ustawiane z modelu *@
+        <input asp-for="AlcoholId" type="hidden" />
+
         <div class="form-group">
-            <label for="Rating">Ocena (1-5):</label>
-            <input type="number" name="Rating" class="form-control" min="1" max="5" required />
+            <label asp-for="Rating">Ocena (1-5):</label>
+            <input asp-for="Rating" class="form-control" min="1" max="5" type="number" required />
+            <span asp-validation-for="Rating" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label for="Comment">Komentarz:</label>
-            <textarea name="Comment" class="form-control" rows="5" required></textarea>
+            <label asp-for="Comment">Komentarz:</label>
+            <textarea asp-for="Comment" class="form-control" rows="5" required></textarea>
+            <span asp-validation-for="Comment" class="text-danger"></span>
         </div>
 
-        <!-- Ukryte pole z AlcoholId -->
-        <input type="hidden" name="AlcoholId" value="@ViewBag.Alcohol.Id" />
-
-        <button type="submit" class="btn btn-primary">Zapisz recenzję</button>
+        <button type="submit" class="btn btn-primary mt-2">Zapisz recenzję</button>
     </form>
 
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
 }

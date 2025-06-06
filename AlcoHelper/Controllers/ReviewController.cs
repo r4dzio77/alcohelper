@@ -2,7 +2,6 @@
 using AlcoHelper.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace AlcoHelper.Controllers
 {
@@ -15,104 +14,92 @@ namespace AlcoHelper.Controllers
             _context = context;
         }
 
+        // GET: /Review/Create?alcoholId=5
         public IActionResult Create(int alcoholId)
         {
-            Console.WriteLine($"Received alcoholId: {alcoholId}"); // Debugowanie
-
-            var alcohol = _context.Alcohols.Find(alcoholId); // Szukamy alkoholu po ID
-
+            var alcohol = _context.Alcohols.Find(alcoholId);
             if (alcohol == null)
-            {
-                Console.WriteLine("No alcohol found with this ID");
                 return NotFound();
-            }
 
-            Console.WriteLine($"Alcohol found: {alcohol.Name}"); // Debugowanie
             ViewBag.Alcohol = alcohol;
             return View();
         }
 
-
-
-
-
-        // Akcja do zapisania recenzji
+        // POST: /Review/Create
         [HttpPost]
         public async Task<IActionResult> Create(Review review)
         {
-            // Przypisanie UserId z sesji
-            var userId = HttpContext.Session.GetInt32("UserId"); // Załóżmy, że przechowujesz ID użytkownika w sesji
+            var userId = HttpContext.Session.GetInt32("UserId");
+
             if (userId == null)
             {
+                TempData["LoginMessage"] = "Musisz być zalogowany, aby dodać recenzję.";
                 return RedirectToAction("Login", "Account");
             }
+
             review.UserId = (int)userId;
+            review.CreatedAt = DateTime.Now;
 
-            // Debugowanie
-            Console.WriteLine($"Received AlcoholId: {review.AlcoholId}");
-            Console.WriteLine($"Received UserId: {review.UserId}");
-
-            if (ModelState.IsValid)
+            // Debug walidacji
+            if (!ModelState.IsValid)
             {
-                _context.Reviews.Add(review);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Index", "Review");
+                Console.WriteLine("ModelState is invalid:");
+                foreach (var key in ModelState.Keys)
+                {
+                    var state = ModelState[key];
+                    foreach (var error in state.Errors)
+                    {
+                        Console.WriteLine($" - {key}: {error.ErrorMessage}");
+                    }
+                }
+                ViewBag.Alcohol = await _context.Alcohols.FindAsync(review.AlcoholId);
+                return View(review);
             }
 
-            return View(review);
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine("[DEBUG] Recenzja zapisana.");
+            return RedirectToAction("Index", "Review");
         }
 
 
-
-
-
-
-
-
-
-
-        // Akcja wyświetlająca listę recenzji
         public async Task<IActionResult> Index()
         {
-            var reviews = await _context.Reviews.Include(r => r.Alcohol).ToListAsync();
+            var reviews = await _context.Reviews
+                .Include(r => r.Alcohol)
+                .Include(r => r.User)
+                .ToListAsync();
+
             return View(reviews);
         }
 
-        // Akcja wyświetlająca szczegóły recenzji
         public async Task<IActionResult> Details(int id)
         {
             var review = await _context.Reviews
-                .Include(r => r.Alcohol) // Ładowanie alkoholu
+                .Include(r => r.Alcohol)
+                .Include(r => r.User)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (review == null)
-            {
                 return NotFound();
-            }
 
-            // Pobieranie komentarzy powiązanych z recenzją
-            var comments = await _context.Comments
+            ViewBag.Comments = await _context.Comments
                 .Where(c => c.ReviewId == id)
-                .Include(c => c.User) // Ładowanie użytkownika, który dodał komentarz
+                .Include(c => c.User)
                 .ToListAsync();
-
-            // Przekazywanie komentarzy do widoku
-            ViewBag.Comments = comments;
 
             return View(review);
         }
 
-
-
-        // Akcja dodająca komentarz
         [HttpPost]
         public async Task<IActionResult> AddComment(int reviewId, string content)
         {
-            // Zamiast Identity, używamy użytkownika z sesji
-            var userId = HttpContext.Session.GetInt32("UserId"); // Zakładając, że przechowujesz ID użytkownika w sesji
+            var userId = HttpContext.Session.GetInt32("UserId");
+
             if (userId == null)
             {
+                TempData["LoginMessage"] = "Zaloguj się, aby dodać komentarz.";
                 return RedirectToAction("Login", "Account");
             }
 
