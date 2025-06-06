@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AlcoHelper.Data;
 using AlcoHelper.Models;
-using System.Collections.Generic;
-using AlcoHelper.Data;
 using AlcoHelper.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Linq;
-using System.IO;
+using Newtonsoft.Json.Linq;
 
 
 namespace AlcoHelper.Controllers
@@ -39,26 +41,28 @@ namespace AlcoHelper.Controllers
             ViewBag.Countries = countries;
             
             return View();
-        }   
+        }
 
         // Metoda do pobierania krajów z API
         public async Task<List<string>> GetCountries()
         {
-            try 
+            try
             {
                 using var client = new HttpClient();
-                var response = await client.GetStringAsync("https://restcountries.com/v3.1/all");
-                var countries = JsonConvert.DeserializeObject<List<Country>>(response);
-                
-                return countries?
-                    .Where(c => c?.Name?.Common != null)
-                    .Select(c => c.Name.Common)
+                var response = await client.GetStringAsync("https://restcountries.com/v3.1/all?fields=name");
+
+                var jArray = JArray.Parse(response);
+
+                var countryNames = jArray
+                    .Select(c => c["name"]?["common"]?.ToString())
+                    .Where(name => !string.IsNullOrEmpty(name))
                     .OrderBy(name => name)
-                    .ToList() ?? new List<string>();
+                    .ToList();
+
+                return countryNames;
             }
             catch (Exception ex)
             {
-                // Log the error
                 Console.WriteLine($"Error fetching countries: {ex.Message}");
                 return new List<string> { "Polska", "Niemcy", "Francja" }; // Fallback list
             }
@@ -223,5 +227,87 @@ namespace AlcoHelper.Controllers
             // Zwracamy plik PDF do pobrania
             return File(pdfData, "application/pdf", $"{alcohol.Name}.pdf");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var alcohol = await _context.Alcohols.FindAsync(id);
+            if (alcohol == null)
+                return NotFound();
+
+            var countries = await GetCountries(); // użyj istniejącej metody
+
+            ViewBag.Countries = countries;
+
+            return View(alcohol);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Alcohol model, IFormFile ImageFile)
+        {
+            if (id != model.Id)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var alcohol = await _context.Alcohols.FindAsync(id);
+            if (alcohol == null)
+                return NotFound();
+
+            // Aktualizuj pola (bez zmiany IsApproved)
+            alcohol.Name = model.Name;
+            alcohol.Type = model.Type;
+            alcohol.Country = model.Country;
+            alcohol.AlcoholPercentage = model.AlcoholPercentage;
+            alcohol.Description = model.Description;
+
+            // Obsługa zdjęcia
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                // Sprawdzenie rozszerzenia pliku (tylko png, jpg, jpeg)
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                var extension = Path.GetExtension(ImageFile.FileName).ToLowerInvariant();
+
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("ImageFile", "Dozwolone tylko pliki: .jpg, .jpeg, .png");
+                    return View(model);
+                }
+
+                // Usuń stare zdjęcie, jeśli istnieje
+                if (!string.IsNullOrEmpty(alcohol.ImageUrl))
+                {
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", alcohol.ImageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
+                // Zapisz nowy plik ze unikalną nazwą
+                var fileName = Guid.NewGuid().ToString() + extension;
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var fullPath = Path.Combine(uploadsFolder, fileName);
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(stream);
+                }
+
+                alcohol.ImageUrl = "/uploads/" + fileName;
+            }
+            // Jeśli nie przesłano pliku, pozostaw ImageUrl bez zmian
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
     }
 }

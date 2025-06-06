@@ -110,41 +110,6 @@ public class AdminController : Controller
         return View(alcohol);
     }
 
-    // Formularz edycji
-    public async Task<IActionResult> Edit(int? id)
-    {
-        if (id == null) return NotFound();
-
-        var alcohol = await _context.Alcohols.FindAsync(id);
-        if (alcohol == null) return NotFound();
-
-        return View(alcohol);
-    }
-
-    // Akcja edycji
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Alcohol alcohol)
-    {
-        if (id != alcohol.Id) return NotFound();
-
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _context.Update(alcohol);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AlcoholExists(alcohol.Id))
-                    return NotFound();
-                throw;
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        return View(alcohol);
-    }
 
     
 
