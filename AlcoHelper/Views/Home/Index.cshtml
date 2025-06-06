@@ -8,55 +8,131 @@
     var sortOrder = ViewBag.SortOrder as string ?? "name_asc";
 }
 
+<!-- STYLE: dodane fonty, ikony i wygląd -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    h1.display-4 {
+        font-weight: bold;
+        color: #3c3b6e;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #444;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .btn-primary, .btn-secondary, .btn-info, .btn-success {
+        border-radius: 25px;
+        padding: 8px 20px;
+        font-weight: 500;
+    }
+
+    .badge {
+        margin-right: 5px;
+        font-size: 0.8rem;
+    }
+
+    .form-inline input,
+    .form-inline select {
+        border-radius: 25px !important;
+        padding: 8px 15px;
+    }
+
+    textarea.form-control {
+        border-radius: 15px;
+        resize: none;
+    }
+
+    .alert-secondary {
+        background-color: #f8f9fa;
+        border-left: 5px solid #28a745;
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .tags {
+        margin-top: auto;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        margin-right: 5px;
+    }
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Witaj</h1>
     <h2>Dostępne alkohole</h2>
 
-    <!-- Przycisk Forum obok "Dodaj alkohol" -->
-    <a href="@Url.Action("Index", "Review")" class="btn btn-secondary mb-3">Forum - Wszystkie recenzje</a>
+    <!-- Forum + wyszukiwarka + sortowanie -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4" style="max-width: 900px; margin: 0 auto;">
+        <a href="@Url.Action("Index", "Review")" class="btn btn-secondary mb-2">Forum - Wszystkie recenzje</a>
 
-    <!-- Formularz wyszukiwania i filtracji -->
-    <form method="get" action="@Url.Action("Index", "Home")" class="form-inline justify-content-center mb-3">
-        <input type="text"
-               class="form-control mr-2"
-               name="searchTerm"
-               placeholder="Wyszukaj po nazwie"
-               value="@ViewBag.SearchTerm"
-               style="width: 250px;" />
+        <form method="get" action="@Url.Action("Index", "Home")" class="form-inline mb-2">
+            <input type="text" class="form-control mr-2" name="searchTerm" placeholder="Wyszukaj po nazwie"
+                   value="@ViewBag.SearchTerm" style="width: 250px;" />
 
-        @Html.DropDownList("sortOrder", new List<SelectListItem>
-        {
-            new SelectListItem { Value = "name_asc", Text = "Nazwa rosnąco", Selected = sortOrder == "name_asc" },
-                new SelectListItem { Value = "name_desc", Text = "Nazwa malejąco", Selected = sortOrder == "name_desc" },
-                new SelectListItem { Value = "alcohol_asc", Text = "Alkohol rosnąco", Selected = sortOrder == "alcohol_asc" },
-                new SelectListItem { Value = "alcohol_desc", Text = "Alkohol malejąco", Selected = sortOrder == "alcohol_desc" }
-                }, new { @class = "form-control form-control-sm mr-2", style = "width: 160px;" })
+            @Html.DropDownList("sortOrder", new List<SelectListItem>
+            {
+                new SelectListItem { Value = "name_asc", Text = "Nazwa rosnąco", Selected = sortOrder == "name_asc" },
+                        new SelectListItem { Value = "name_desc", Text = "Nazwa malejąco", Selected = sortOrder == "name_desc" },
+                        new SelectListItem { Value = "alcohol_asc", Text = "Alkohol rosnąco", Selected = sortOrder == "alcohol_asc" },
+                        new SelectListItem { Value = "alcohol_desc", Text = "Alkohol malejąco", Selected = sortOrder == "alcohol_desc" }
+                        }, new { @class = "form-control form-control-sm mr-2", style = "width: 160px;" })
 
-        <button type="submit" class="btn btn-primary">Szukaj</button>
-    </form>
+            <button type="submit" class="btn btn-primary">Szukaj</button>
+        </form>
+    </div>
 
-    <!-- Filtracja po tagach (checkboxy) poniżej formularza -->
-    <div class="text-left mb-4" style="max-width: 900px; margin: 0 auto;">
+    <!-- Filtr tagów -->
+    <div class="border rounded p-3 mb-4 bg-light" style="max-width: 900px; margin: 0 auto;">
         <strong>Filtruj po tagach:</strong>
         <form method="get" action="@Url.Action("Index", "Home")">
-            @* Ukryte pola, żeby zachować searchTerm i sortOrder przy zmianie filtrów *@
             <input type="hidden" name="searchTerm" value="@ViewBag.SearchTerm" />
             <input type="hidden" name="sortOrder" value="@sortOrder" />
 
-            <div class="form-group d-flex flex-wrap">
+            <div class="form-group d-flex flex-wrap mt-2">
                 @foreach (var tag in tags)
                 {
-                    <label class="mr-3 mb-2">
+                    <label class="mr-3 mb-2 checkbox-label">
                         <input type="checkbox" name="selectedTagIds" value="@tag.Id"
                                @(selectedTagIds.Contains(tag.Id) ? "checked" : "") />
                         @tag.Name
                     </label>
                 }
             </div>
-            <button type="submit" class="btn btn-secondary btn-sm">Filtruj</button>
+            <button type="submit" class="btn btn-secondary btn-sm mt-2">Filtruj</button>
         </form>
     </div>
 
+    <!-- Lista alkoholi -->
     @if (Model == null || !Model.Any())
     {
         <div class="alert alert-info">Brak zatwierdzonych alkoholi w bazie danych.</div>
@@ -106,14 +182,11 @@
                                 }
                             </div>
 
-                            <!-- Przycisk z ikoną przekierowujący do szczegółów -->
                             <a href="@Url.Action("Details", "Alcohol", new { id = alcohol.Id })" class="btn btn-info mt-3">
                                 <i class="fas fa-info-circle"></i> Zobacz szczegóły
                             </a>
 
-                            <!-- Przycisk do dodania recenzji dla tego alkoholu -->
                             <a href="@Url.Action("Create", "Review", new { alcoholId = alcohol.Id })" class="btn btn-primary mt-3">Dodaj recenzję</a>
-
                         </div>
                     </div>
                 </div>
@@ -122,11 +195,10 @@
     }
 </div>
 
-<hr />
+<hr class="mt-5" />
+<h3 class="mb-3 text-success font-weight-bold">Nie wiesz co wybrać? Zapytaj naszego sommeliera!</h3>
 
-<h3>Nie wiesz co wybrać? Zapytaj naszego sommeliera!</h3>
-
-<form method="post" action="@Url.Action("Index", "Chat")" class="mb-3">
+<form method="post" action="@Url.Action("Index", "Chat")" class="mb-4">
     <div class="form-group">
         <textarea name="userMessage" class="form-control" rows="3" placeholder="Opisz swoje preferencje..."></textarea>
     </div>
