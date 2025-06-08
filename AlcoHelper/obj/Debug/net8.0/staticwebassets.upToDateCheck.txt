@@ -60,5 +60,7 @@ wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
 wwwroot\uploads\5cc90393-5029-473f-a25f-2ff0792b4734.jpg
 wwwroot\uploads\69941f4f-ad71-4897-8e1a-16da7e4638d6.png
+wwwroot\uploads\82825b52-1954-451f-a8b1-63f03d16778c.jpg
 wwwroot\uploads\profesjonalna-degustacja-wina.jpg
 wwwroot\uploads\singleton_12.jpeg
+wwwroot\uploads\tps220303yp_011-dassai-23.jpg

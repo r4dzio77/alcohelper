@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Repos\\Alcohelper\\AlcoHelper\\AlcoHelper.csproj": {}
+    "E:\\Repos\\AlcoHelper\\AlcoHelper\\AlcoHelper.csproj": {}
   },
   "projects": {
-    "E:\\Repos\\Alcohelper\\AlcoHelper\\AlcoHelper.csproj": {
+    "E:\\Repos\\AlcoHelper\\AlcoHelper\\AlcoHelper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Repos\\Alcohelper\\AlcoHelper\\AlcoHelper.csproj",
+        "projectUniqueName": "E:\\Repos\\AlcoHelper\\AlcoHelper\\AlcoHelper.csproj",
         "projectName": "AlcoHelper",
-        "projectPath": "E:\\Repos\\Alcohelper\\AlcoHelper\\AlcoHelper.csproj",
+        "projectPath": "E:\\Repos\\AlcoHelper\\AlcoHelper\\AlcoHelper.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
         "outputPath": "E:\\Repos\\Alcohelper\\AlcoHelper\\obj\\",
         "projectStyle": "PackageReference",

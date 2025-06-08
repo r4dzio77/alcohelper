@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "R4cMYyjJIeQ=",
+  "dgSpecHash": "B+627u9a6YE=",
   "success": true,
-  "projectFilePath": "E:\\Repos\\Alcohelper\\AlcoHelper\\AlcoHelper.csproj",
+  "projectFilePath": "E:\\Repos\\AlcoHelper\\AlcoHelper\\AlcoHelper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

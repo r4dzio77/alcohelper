@@ -34,13 +34,14 @@ namespace AlcoHelper.Controllers
             var tags = _context.Tags?
                 .OrderBy(t => t.Name)
                 .ToList() ?? new List<Tag>();
-            
+
             var countries = (await GetCountries()) ?? new List<string>();
-            
+
             ViewBag.Tags = tags;
             ViewBag.Countries = countries;
-            
-            return View();
+
+            return View(new AddAlcoholViewModel());
+
         }
 
         // Metoda do pobierania krajów z API
@@ -78,8 +79,10 @@ namespace AlcoHelper.Controllers
             public string Common { get; set; }
         }
 
+
+
         [HttpPost]
-        public IActionResult Add(AddAlcoholViewModel model, IFormFile ImageUrl)
+        public IActionResult Add(AddAlcoholViewModel model)
         {
             var userName = HttpContext.Session.GetString("UserName");
             var role = HttpContext.Session.GetString("Role");
@@ -90,7 +93,7 @@ namespace AlcoHelper.Controllers
             {
                 string imageFilePath = null;
 
-                if (ImageUrl != null && ImageUrl.Length > 0)
+                if (model.ImageFile != null && model.ImageFile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
                     if (!Directory.Exists(uploadsFolder))
@@ -98,19 +101,18 @@ namespace AlcoHelper.Controllers
                         Directory.CreateDirectory(uploadsFolder);
                     }
 
-                    var fileName = Path.GetFileName(ImageUrl.FileName);
+                    var fileName = Path.GetFileName(model.ImageFile.FileName);
                     var fullPath = Path.Combine(uploadsFolder, fileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        ImageUrl.CopyTo(stream);
+                        model.ImageFile.CopyTo(stream);
                     }
 
                     // Zapisujemy tylko ścieżkę względną
                     imageFilePath = "/uploads/" + fileName;
                 }
 
-                // Tworzenie obiektu Alcohol
                 var alcohol = new Alcohol
                 {
                     Name = model.Name,
@@ -118,35 +120,40 @@ namespace AlcoHelper.Controllers
                     Country = model.Country,
                     AlcoholPercentage = model.AlcoholPercentage,
                     Description = model.Description,
-                    ImageUrl = imageFilePath, // Ścieżka do pliku obrazu
+                    ImageUrl = imageFilePath,
                     AddedDate = DateTime.Now,
-                    IsApproved = false // Na starcie niezatwierdzony
+                    IsApproved = false
                 };
 
-                // Dodanie alkoholu do bazy danych
                 _context.Alcohols.Add(alcohol);
                 _context.SaveChanges();
 
-                // Zapisz wybrane tagi do tabeli pośredniczącej AlcoholTag
-                foreach (var tagId in model.TagIds)
+                // Tagi
+                if (model.TagIds != null)
                 {
-                    var alcoholTag = new AlcoholTag
+                    foreach (var tagId in model.TagIds)
                     {
-                        AlcoholId = alcohol.Id,
-                        TagId = tagId
-                    };
-                    _context.AlcoholTags.Add(alcoholTag);
+                        _context.AlcoholTags.Add(new AlcoholTag
+                        {
+                            AlcoholId = alcohol.Id,
+                            TagId = tagId
+                        });
+                    }
                 }
 
-                // Zapisz zmiany
                 _context.SaveChanges();
 
                 TempData["Message"] = "Alkohol dodany! Czeka na zatwierdzenie przez admina.";
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(model); // Wróć do widoku z błędami, jeśli coś nie jest w porządku
+            // Przy błędach trzeba załadować dane do ViewBag
+            ViewBag.Tags = _context.Tags.OrderBy(t => t.Name).ToList();
+            ViewBag.Countries = GetCountries().Result;
+
+            return View(model);
         }
+
 
         public IActionResult PendingApproval()
         {
@@ -231,33 +238,51 @@ namespace AlcoHelper.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var alcohol = await _context.Alcohols.FindAsync(id);
+            var alcohol = await _context.Alcohols
+                .Include(a => a.AlcoholTags)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
             if (alcohol == null)
                 return NotFound();
 
-            var countries = await GetCountries(); // użyj istniejącej metody
+            var model = new AddAlcoholViewModel
+            {
+                Id = alcohol.Id,
+                Name = alcohol.Name,
+                Type = alcohol.Type,
+                Country = alcohol.Country,
+                AlcoholPercentage = alcohol.AlcoholPercentage,
+                Description = alcohol.Description,
+                ExistingImageUrl = alcohol.ImageUrl,
+                TagIds = alcohol.AlcoholTags.Select(at => at.TagId).ToList()
+            };
 
-            ViewBag.Countries = countries;
+            ViewBag.Countries = await GetCountries();
+            ViewBag.Tags = _context.Tags.OrderBy(t => t.Name).ToList();
 
-            return View(alcohol);
+            return View(model);
         }
+
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Alcohol model, IFormFile ImageFile)
+        public async Task<IActionResult> Edit(int id, AddAlcoholViewModel model)
         {
             if (id != model.Id)
                 return BadRequest();
 
             if (!ModelState.IsValid)
+            {
+                ViewBag.Countries = await GetCountries();
+                ViewBag.Tags = _context.Tags.OrderBy(t => t.Name).ToList();
                 return View(model);
+            }
 
             var alcohol = await _context.Alcohols.FindAsync(id);
             if (alcohol == null)
                 return NotFound();
 
-            // Aktualizuj pola (bez zmiany IsApproved)
             alcohol.Name = model.Name;
             alcohol.Type = model.Type;
             alcohol.Country = model.Country;
@@ -265,29 +290,26 @@ namespace AlcoHelper.Controllers
             alcohol.Description = model.Description;
 
             // Obsługa zdjęcia
-            if (ImageFile != null && ImageFile.Length > 0)
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
             {
-                // Sprawdzenie rozszerzenia pliku (tylko png, jpg, jpeg)
                 var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
-                var extension = Path.GetExtension(ImageFile.FileName).ToLowerInvariant();
+                var extension = Path.GetExtension(model.ImageFile.FileName).ToLowerInvariant();
 
                 if (!allowedExtensions.Contains(extension))
                 {
+                    ViewBag.Countries = await GetCountries();
+                    ViewBag.Tags = _context.Tags.OrderBy(t => t.Name).ToList();
                     ModelState.AddModelError("ImageFile", "Dozwolone tylko pliki: .jpg, .jpeg, .png");
                     return View(model);
                 }
 
-                // Usuń stare zdjęcie, jeśli istnieje
                 if (!string.IsNullOrEmpty(alcohol.ImageUrl))
                 {
                     var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", alcohol.ImageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
                     if (System.IO.File.Exists(oldFilePath))
-                    {
                         System.IO.File.Delete(oldFilePath);
-                    }
                 }
 
-                // Zapisz nowy plik ze unikalną nazwą
                 var fileName = Guid.NewGuid().ToString() + extension;
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
                 if (!Directory.Exists(uploadsFolder))
@@ -296,17 +318,40 @@ namespace AlcoHelper.Controllers
                 var fullPath = Path.Combine(uploadsFolder, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
-                    await ImageFile.CopyToAsync(stream);
+                    await model.ImageFile.CopyToAsync(stream);
                 }
 
                 alcohol.ImageUrl = "/uploads/" + fileName;
             }
-            // Jeśli nie przesłano pliku, pozostaw ImageUrl bez zmian
+            else
+            {
+                alcohol.ImageUrl = model.ExistingImageUrl;
+            }
 
             await _context.SaveChangesAsync();
 
+            // Zaktualizuj tagi
+            var oldTags = _context.AlcoholTags.Where(at => at.AlcoholId == alcohol.Id);
+            _context.AlcoholTags.RemoveRange(oldTags);
+            await _context.SaveChangesAsync();
+
+            if (model.TagIds != null)
+            {
+                foreach (var tagId in model.TagIds)
+                {
+                    _context.AlcoholTags.Add(new AlcoholTag
+                    {
+                        AlcoholId = alcohol.Id,
+                        TagId = tagId
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
+
+
 
 
     }

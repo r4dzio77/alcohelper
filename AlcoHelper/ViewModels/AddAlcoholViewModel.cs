@@ -1,11 +1,12 @@
-﻿using AlcoHelper.Models;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 namespace AlcoHelper.ViewModels
 {
     public class AddAlcoholViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Nazwa jest wymagana!")]
         public string Name { get; set; }
 
@@ -21,9 +22,11 @@ namespace AlcoHelper.ViewModels
         [StringLength(500, ErrorMessage = "Opis może mieć maksymalnie 500 znaków!")]
         public string Description { get; set; }
 
-        [Url(ErrorMessage = "Podaj poprawny URL zdjęcia!")]
-        public string? ImageUrl { get; set; }
+        public string? ExistingImageUrl { get; set; }
 
-        public List<int> TagIds { get; set; }  // Lista wybranych tagów
+        public List<int> TagIds { get; set; } = new();
+
+        [DataType(DataType.Upload)]
+        public IFormFile? ImageFile { get; set; } // ← dodane poprawnie
     }
 }
