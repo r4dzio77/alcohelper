@@ -1,33 +1,101 @@
 ﻿@model IEnumerable<AlcoHelper.Models.Review>
-
 @{
     ViewData["Title"] = "Recenzje";
+    var sortOrder = ViewBag.SortOrder as string ?? "";
 }
 
-<h2>@ViewData["Title"]</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Ocena</th>
-            <th>Komentarz</th>
-            <th>Użytkownik</th>
-            <th>Data utworzenia</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var review in Model)
-        {
-            <tr>
-                <td>@review.Rating</td>
-                <td>@review.Comment</td>
-                <td>@review.User?.Username</td>
-                <td>@review.CreatedAt.ToString("dd-MM-yyyy")</td>
-                <td>
-                    <a href="@Url.Action("Details", "Review", new { id = review.Id })" class="btn btn-info">Zobacz szczegóły</a>
-                </td>
-            </tr>
+<style>
+    h2 {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+
+    .table thead th {
+        background-color: #f4f6f9;
+        color: #333;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .sort-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .sort-link:hover {
+            text-decoration: underline;
         }
-    </tbody>
-</table>
+
+    .btn-info {
+        padding: 4px 12px;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped shadow-sm rounded">
+            <thead>
+                <tr>
+                    <th>
+                        <a class="sort-link" href="@Url.Action("Index", new { sortOrder = sortOrder == "alcohol_asc" ? "alcohol_desc" : "alcohol_asc" })">
+                            Alkohol
+                            <i class="fa @(sortOrder == "alcohol_asc" ? "fa-sort-up" : sortOrder == "alcohol_desc" ? "fa-sort-down" : "fa-sort")"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="sort-link" href="@Url.Action("Index", new { sortOrder = sortOrder == "rating_asc" ? "rating_desc" : "rating_asc" })">
+                            Ocena
+                            <i class="fa @(sortOrder == "rating_asc" ? "fa-sort-up" : sortOrder == "rating_desc" ? "fa-sort-down" : "fa-sort")"></i>
+                        </a>
+                    </th>
+                    <th>Komentarz</th>
+                    <th>
+                        <a class="sort-link" href="@Url.Action("Index", new { sortOrder = sortOrder == "user_asc" ? "user_desc" : "user_asc" })">
+                            Użytkownik
+                            <i class="fa @(sortOrder == "user_asc" ? "fa-sort-up" : sortOrder == "user_desc" ? "fa-sort-down" : "fa-sort")"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="sort-link" href="@Url.Action("Index", new { sortOrder = sortOrder == "date_asc" ? "date_desc" : "date_asc" })">
+                            Data
+                            <i class="fa @(sortOrder == "date_asc" ? "fa-sort-up" : sortOrder == "date_desc" ? "fa-sort-down" : "fa-sort")"></i>
+                        </a>
+                    </th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var review in Model)
+                {
+                    <tr>
+                        <td>@review.Alcohol?.Name</td>
+                        <td>@review.Rating</td>
+                        <td>@review.Comment</td>
+                        <td>@review.User?.Username</td>
+                        <td>@review.CreatedAt.ToString("dd-MM-yyyy")</td>
+                        <td>
+                            <a href="@Url.Action("Details", "Review", new { id = review.Id })" class="btn btn-info">
+                                <i class="fas fa-eye"></i> Szczegóły
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

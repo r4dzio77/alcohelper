@@ -351,6 +351,66 @@ namespace AlcoHelper.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        public IActionResult AddToFavorites(int alcoholId)
+        {
+            Console.WriteLine($"[AddToFavorites] alcoholId={alcoholId}");
+
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                Console.WriteLine("[AddToFavorites] Brak userId w sesji.");
+                return Unauthorized();
+            }
+
+            if (!_context.FavoriteAlcos.Any(f => f.UserId == userId && f.AlcoholId == alcoholId))
+            {
+                _context.FavoriteAlcos.Add(new FavoriteAlco
+                {
+                    UserId = userId.Value,
+                    AlcoholId = alcoholId
+                });
+                _context.SaveChanges();
+                Console.WriteLine("[AddToFavorites] Dodano do ulubionych.");
+            }
+            else
+            {
+                Console.WriteLine("[AddToFavorites] Już istnieje.");
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFromFavorites(int alcoholId)
+        {
+            Console.WriteLine($"[RemoveFromFavorites] alcoholId={alcoholId}");
+
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                Console.WriteLine("[RemoveFromFavorites] Brak userId w sesji.");
+                return Unauthorized();
+            }
+
+            var favorite = _context.FavoriteAlcos.FirstOrDefault(f => f.UserId == userId && f.AlcoholId == alcoholId);
+            if (favorite != null)
+            {
+                _context.FavoriteAlcos.Remove(favorite);
+                _context.SaveChanges();
+                Console.WriteLine("[RemoveFromFavorites] Usunięto z ulubionych.");
+            }
+            else
+            {
+                Console.WriteLine("[RemoveFromFavorites] Nie znaleziono ulubionego.");
+            }
+
+            return Ok();
+        }
+
+
+
+
 
 
 

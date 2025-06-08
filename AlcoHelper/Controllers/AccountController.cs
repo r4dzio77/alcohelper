@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using AlcoHelper.Data;
 using AlcoHelper.ViewModels;
 using AlcoHelper.Services;
-
-
+using Microsoft.AspNetCore.Identity;
 
 public class AccountController : Controller
 {
     private readonly AlcoHelperContext _context;
     private readonly EmailService _emailService;
-    private static List<PasswordResetToken> _resetTokens = new(); // tymczasowo w pamięci
+    private static List<PasswordResetToken> _resetTokens = new();
 
     public AccountController(AlcoHelperContext context, EmailService emailService)
     {
@@ -41,11 +40,13 @@ public class AccountController : Controller
                 return View(model);
             }
 
+            var hasher = new PasswordHasher<User>();
+
             var user = new User
             {
                 Username = model.Username,
                 Email = model.Email,
-                PasswordHash = model.Password, // Uwaga: powinieneś hashować hasło!
+                PasswordHash = hasher.HashPassword(null, model.Password),
                 CreatedAt = DateTime.Now,
                 RoleId = 2
             };
@@ -65,11 +66,19 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var user = _context.Users.SingleOrDefault(u => u.Email == model.Email);
-
-            if (user == null || user.PasswordHash != model.Password)
+            if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Błędny email lub hasło.");
-                return View(model); // Zwracamy model, aby zachować wprowadzone dane
+                return View(model);
+            }
+
+            var hasher = new PasswordHasher<User>();
+            var result = hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+
+            if (result == PasswordVerificationResult.Failed)
+            {
+                ModelState.AddModelError(string.Empty, "Błędny email lub hasło.");
+                return View(model);
             }
 
             var roleName = _context.Roles
@@ -80,21 +89,18 @@ public class AccountController : Controller
             HttpContext.Session.SetString("UserName", user.Username);
             HttpContext.Session.SetString("Role", roleName);
             HttpContext.Session.SetInt32("UserId", user.Id);
+
             Console.WriteLine($"[DEBUG] Session 'Role' ustawione na: {roleName}");
             Console.WriteLine($"[DEBUG] user.RoleId = {user.RoleId}");
+
             return RedirectToAction("Index", "Home");
         }
 
-        // Jeśli ModelState.IsValid == false, zwracamy widok z błędami walidacji
         return View(model);
     }
 
     [HttpGet]
-    public IActionResult ForgotPassword()
-    {
-        return View();
-    }
-
+    public IActionResult ForgotPassword() => View();
 
     [HttpPost]
     public IActionResult ForgotPassword(string email)
@@ -133,7 +139,6 @@ public class AccountController : Controller
 
         _emailService.Send(user.Email, "[AlcoHelper] Prośba o zresetowanie hasła", htmlBody);
 
-
         return View("ForgotPasswordConfirmation");
     }
 
@@ -161,24 +166,25 @@ public class AccountController : Controller
             return View("ResetPasswordInvalid");
 
         var user = _context.Users.Find(tokenEntry.UserId);
-        user.PasswordHash = model.NewPassword; // TODO: zhashuj
-        _context.SaveChanges();
+        var hasher = new PasswordHasher<User>();
+        user.PasswordHash = hasher.HashPassword(user, model.NewPassword);
 
+        _context.SaveChanges();
         _resetTokens.Remove(tokenEntry);
 
         return View("ResetPasswordSuccess");
     }
 
-
     public IActionResult Logout()
     {
-        HttpContext.Session.Remove("UserName"); // Usuwamy dane użytkownika z sesji
+        HttpContext.Session.Remove("UserName");
         HttpContext.Session.Remove("Role");
+        HttpContext.Session.Remove("UserId");
         return RedirectToAction("Index", "Home");
     }
+
     public IActionResult AccessDenied()
     {
-        return View();  // Upewnij się, że masz widok AccessDenied.cshtml
+        return View();
     }
 }
-

@@ -85,6 +85,18 @@ namespace AlcoHelper.Controllers
 
             ViewBag.Tags = _context.Tags.ToList();
 
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            var userFavorites = userId.HasValue
+                ? _context.FavoriteAlcos
+                    .Where(f => f.UserId == userId.Value)
+                    .Select(f => f.AlcoholId)
+                    .ToList()
+                : new List<int>();
+
+            ViewBag.UserFavorites = userFavorites;
+
+
             return View(alcoholList);
         }
     }

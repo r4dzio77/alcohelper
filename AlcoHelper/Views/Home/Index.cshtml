@@ -2,74 +2,77 @@
 
 @{
     ViewData["Title"] = "Home Page";
-
     var selectedTagIds = ViewBag.SelectedTagIds as List<int> ?? new List<int>();
     var tags = ViewBag.Tags as List<AlcoHelper.Models.Tag> ?? new List<AlcoHelper.Models.Tag>();
     var sortOrder = ViewBag.SortOrder as string ?? "name_asc";
+    var userFavorites = ViewBag.UserFavorites as List<int> ?? new List<int>();
 }
 
-<!-- STYLE: dodane fonty, ikony i wygląd -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
     body {
         font-family: 'Inter', sans-serif;
+        background: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url('/uploads/bg-alcohol.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-blend-mode: lighten;
     }
 
     h1.display-4 {
         font-weight: bold;
-        color: #3c3b6e;
-    }
-
-    h2 {
-        margin-bottom: 20px;
-        color: #444;
+        color: #2d2f41;
     }
 
     .card {
         border: none;
-        border-radius: 15px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
+        border-radius: 18px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.95);
     }
 
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
 
-    .card-title {
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #2c3e50;
-    }
-
-    .card-text {
-        font-size: 0.95rem;
-        color: #555;
-    }
-
-    .btn-primary, .btn-secondary, .btn-info, .btn-success {
-        border-radius: 25px;
-        padding: 8px 20px;
-        font-weight: 500;
-    }
-
-    .badge {
-        margin-right: 5px;
+    .badge-tag {
+        display: inline-block;
+        margin: 2px 5px 2px 0;
+        padding: 6px 12px;
         font-size: 0.8rem;
+        font-weight: 500;
+        background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        color: #1a1a1a;
+        border-radius: 999px;
+        transition: 0.2s;
     }
 
-    .form-inline input,
-    .form-inline select {
-        border-radius: 25px !important;
-        padding: 8px 15px;
+        .badge-tag:hover {
+            filter: brightness(1.1);
+        }
+
+    .tag-checkbox {
+        display: flex;
+        align-items: center;
+        margin: 5px 12px 5px 0;
+        padding: 5px 10px;
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    textarea.form-control {
-        border-radius: 15px;
-        resize: none;
-    }
+        .tag-checkbox:hover {
+            background-color: rgba(255,255,255,1);
+        }
+
+        .tag-checkbox input[type="checkbox"] {
+            margin-right: 6px;
+        }
 
     .alert-secondary {
         background-color: #f8f9fa;
@@ -77,28 +80,15 @@
         padding: 15px;
         margin-top: 20px;
     }
-
-    .tags {
-        margin-top: auto;
-    }
-
-    .checkbox-label input[type="checkbox"] {
-        margin-right: 5px;
-    }
 </style>
 
 <div class="text-center">
     <h1 class="display-4">Witaj</h1>
     <h2>Dostępne alkohole</h2>
 
-    <!-- Forum + wyszukiwarka + sortowanie -->
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4" style="max-width: 900px; margin: 0 auto;">
-       
-
         <form method="get" action="@Url.Action("Index", "Home")" class="form-inline mb-2">
-            <input type="text" class="form-control mr-2" name="searchTerm" placeholder="Wyszukaj po nazwie"
-                   value="@ViewBag.SearchTerm" style="width: 250px;" />
-
+            <input type="text" class="form-control mr-2" name="searchTerm" placeholder="Wyszukaj po nazwie" value="@ViewBag.SearchTerm" style="width: 250px;" />
             @Html.DropDownList("sortOrder", new List<SelectListItem>
             {
                 new SelectListItem { Value = "name_asc", Text = "Nazwa rosnąco", Selected = sortOrder == "name_asc" },
@@ -106,24 +96,20 @@
                         new SelectListItem { Value = "alcohol_asc", Text = "Alkohol rosnąco", Selected = sortOrder == "alcohol_asc" },
                         new SelectListItem { Value = "alcohol_desc", Text = "Alkohol malejąco", Selected = sortOrder == "alcohol_desc" }
                         }, new { @class = "form-control form-control-sm mr-2", style = "width: 160px;" })
-
             <button type="submit" class="btn btn-primary">Szukaj</button>
         </form>
     </div>
 
-    <!-- Filtr tagów -->
     <div class="border rounded p-3 mb-4 bg-light" style="max-width: 900px; margin: 0 auto;">
         <strong>Filtruj po tagach:</strong>
         <form method="get" action="@Url.Action("Index", "Home")">
             <input type="hidden" name="searchTerm" value="@ViewBag.SearchTerm" />
             <input type="hidden" name="sortOrder" value="@sortOrder" />
-
             <div class="form-group d-flex flex-wrap mt-2">
                 @foreach (var tag in tags)
                 {
-                    <label class="mr-3 mb-2 checkbox-label">
-                        <input type="checkbox" name="selectedTagIds" value="@tag.Id"
-                               @(selectedTagIds.Contains(tag.Id) ? "checked" : "") />
+                    <label class="tag-checkbox">
+                        <input type="checkbox" name="selectedTagIds" value="@tag.Id" @(selectedTagIds.Contains(tag.Id) ? "checked" : "") />
                         @tag.Name
                     </label>
                 }
@@ -132,7 +118,6 @@
         </form>
     </div>
 
-    <!-- Lista alkoholi -->
     @if (Model == null || !Model.Any())
     {
         <div class="alert alert-info">Brak zatwierdzonych alkoholi w bazie danych.</div>
@@ -142,21 +127,20 @@
         <div class="row">
             @foreach (var alcohol in Model)
             {
+                var isFavorite = userFavorites.Contains(alcohol.Id);
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        @if (!string.IsNullOrEmpty(alcohol.ImageUrl))
-                        {
-                            <img src="@alcohol.ImageUrl"
-                                 class="card-img-top"
-                                 style="max-height: 200px; object-fit: cover;"
-                                 onerror="this.onerror=null;this.src='https://via.placeholder.com/300x200?text=Brak+zdjęcia';" />
-                        }
-                        else
-                        {
-                            <img src="https://via.placeholder.com/300x200?text=Brak+zdjęcia"
-                                 class="card-img-top"
-                                 style="max-height: 200px; object-fit: cover;" />
-                        }
+                    <div class="card h-100 d-flex flex-column position-relative">
+                        <button class="btn btn-link p-0 toggle-favorite position-absolute"
+                                style="top: 10px; right: 12px; z-index: 5;"
+                                data-id="@alcohol.Id"
+                                data-isfavorite="@isFavorite.ToString().ToLower()"
+                                title="@(isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych")">
+                            <i class="@(isFavorite ? "fas" : "far") fa-heart fa-lg @(isFavorite ? "text-danger" : "text-secondary")"></i>
+                        </button>
+
+                        <img src="@(!string.IsNullOrEmpty(alcohol.ImageUrl) ? alcohol.ImageUrl : "https://via.placeholder.com/300x200?text=Brak+zdjęcia")"
+                             class="card-img-top"
+                             style="height: 200px; object-fit: contain; width: 100%; background-color: #fff;" />
 
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">@alcohol.Name</h5>
@@ -165,36 +149,32 @@
                             <p class="card-text"><strong>Alkohol:</strong> @alcohol.AlcoholPercentage%</p>
                             <p class="card-text"><strong>Opis:</strong> @alcohol.Description</p>
 
-                            <div class="tags">
+                            <div class="mt-auto">
                                 @if (alcohol.AlcoholTags != null && alcohol.AlcoholTags.Any())
                                 {
-                                    <p>
-                                        <strong>Tagi:</strong>
-                                        @foreach (var alcoholTag in alcohol.AlcoholTags)
+                                    <div class="mb-2">
+                                        @foreach (var tag in alcohol.AlcoholTags)
                                         {
-                                            <span class="badge badge-secondary">@alcoholTag.Tag.Name</span>
+                                            <span class="badge-tag">@tag.Tag?.Name</span>
                                         }
-                                    </p>
+                                    </div>
                                 }
                                 else
                                 {
-                                    <p><strong>Tagi:</strong> Brak tagów</p>
+                                    <p class="mb-2"><strong>Tagi:</strong> Brak tagów</p>
+                                }
+
+                                <a href="@Url.Action("Details", "Alcohol", new { id = alcohol.Id })" class="btn btn-info btn-sm">
+                                    <i class="fas fa-info-circle"></i> Szczegóły
+                                </a>
+                                <a href="@Url.Action("Create", "Review", new { alcoholId = alcohol.Id })" class="btn btn-primary btn-sm ml-1">Recenzja</a>
+                                @if (Context.Session.GetString("Role") == "Admin")
+                                {
+                                    <a href="@Url.Action("Edit", "Alcohol", new { id = alcohol.Id })" class="btn btn-warning btn-sm ml-1">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                 }
                             </div>
-
-                            <a href="@Url.Action("Details", "Alcohol", new { id = alcohol.Id })" class="btn btn-info mt-3">
-                                <i class="fas fa-info-circle"></i> Zobacz szczegóły
-                            </a>
-
-                            <a href="@Url.Action("Create", "Review", new { alcoholId = alcohol.Id })" class="btn btn-primary mt-3">Dodaj recenzję</a>
-
-                            @if (Context.Session.GetString("Role") == "Admin")
-                            {
-                                <a href="@Url.Action("Edit", "Alcohol", new { id = alcohol.Id })" class="btn btn-warning mt-2">
-                                    <i class="fas fa-edit"></i> Edytuj
-                                </a>
-                            }
-
                         </div>
                     </div>
                 </div>
@@ -220,4 +200,47 @@
         <br />
         <strong>Sommelier:</strong> @Html.Raw(ViewBag.BotResponse.Replace("\n", "<br />"))
     </div>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.toggle-favorite').forEach(button => {
+                button.addEventListener('click', async function (e) {
+                    e.preventDefault();
+
+                    const alcoholId = this.dataset.id;
+                    const isFavorite = this.dataset.isfavorite === 'true';
+                    const url = isFavorite ? '/Alcohol/RemoveFromFavorites' : '/Alcohol/AddToFavorites';
+
+                    const formData = new FormData();
+                    formData.append('alcoholId', alcoholId);
+
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                            if (response.ok) {
+            const icon = this.querySelector('i');
+
+            if (isFavorite) {
+                // Usunięto z ulubionych – zmień ikonę
+                icon.classList.remove('fas', 'text-danger');
+                icon.classList.add('far', 'text-secondary');
+                this.dataset.isfavorite = 'false';
+            } else {
+                // Dodano do ulubionych – zmień ikonę
+                icon.classList.remove('far', 'text-secondary');
+                icon.classList.add('fas', 'text-danger');
+                this.dataset.isfavorite = 'true';
+            }
+        }
+         else {
+                        alert("Wystąpił błąd podczas zapisu.");
+                    }
+                });
+            });
+        });
+    </script>
 }

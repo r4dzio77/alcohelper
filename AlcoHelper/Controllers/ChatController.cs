@@ -17,7 +17,7 @@ namespace AlcoHelper.Controllers
             ViewBag.UserMessage = HttpContext.Session.GetString("UserMessage");
             ViewBag.BotResponse = HttpContext.Session.GetString("BotResponse");
             return View();
-}
+        }
 
         [HttpPost]
         public async Task<IActionResult> Index(string userMessage)

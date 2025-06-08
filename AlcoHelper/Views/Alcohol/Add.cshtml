@@ -1,68 +1,138 @@
 ﻿@model AlcoHelper.ViewModels.AddAlcoholViewModel
 
-<h2>Dodaj Alkohol</h2>
+@{
+    ViewData["Title"] = "Dodaj Alkohol";
+}
 
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-    <div class="form-group">
-        <label asp-for="Type"></label>
-        <input asp-for="Type" class="form-control" />
-        <span asp-validation-for="Type" class="text-danger"></span>
-    </div>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('/uploads/bg-alcohol.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-blend-mode: lighten;
+    }
 
-    <div class="form-group">
-        <label asp-for="Country">Kraj</label>
-        <select asp-for="Country" class="form-control" asp-items="new SelectList(ViewBag.Countries)">
-            <option value="">Wybierz kraj</option>
-        </select>
-        <span asp-validation-for="Country" class="text-danger"></span>
-    </div>
+    .form-wrapper {
+        max-width: 700px;
+        margin: 40px auto;
+        background-color: #ffffffdd;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
 
-    <div class="form-group">
-        <label asp-for="AlcoholPercentage"></label>
-        <input asp-for="AlcoholPercentage" class="form-control" step="0.1" />
-        <span asp-validation-for="AlcoholPercentage" class="text-danger"></span>
-    </div>
+    h2 {
+        text-align: center;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: #343a40;
+    }
 
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+    label {
+        font-weight: 500;
+    }
 
-    <div class="form-group">
-        <label>Tagi</label>
-        @if (ViewBag.Tags is List<AlcoHelper.Models.Tag> tags && tags.Any())
-        {
-            @foreach (var tag in tags)
+    .form-control,
+    .form-control-file,
+    select {
+        border-radius: 10px;
+    }
+
+    .form-check {
+        margin-bottom: 8px;
+    }
+
+    .btn-primary {
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+    .alert-warning {
+        font-size: 0.95rem;
+    }
+</style>
+
+<div class="form-wrapper">
+    <h2>Dodaj Alkohol</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Type" class="form-label"></label>
+            <input asp-for="Type" class="form-control" />
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Country" class="form-label">Kraj</label>
+            <select asp-for="Country" class="form-select" asp-items="new SelectList(ViewBag.Countries)">
+                <option value="">Wybierz kraj</option>
+            </select>
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AlcoholPercentage" class="form-label"></label>
+            <input asp-for="AlcoholPercentage" class="form-control" step="0.1" />
+            <span asp-validation-for="AlcoholPercentage" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tagi</label>
+            @if (ViewBag.Tags is List<AlcoHelper.Models.Tag> tags && tags.Any())
             {
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="TagIds" value="@tag.Id"
-                           @(Model.TagIds != null && Model.TagIds.Contains(tag.Id) ? "checked" : "") />
-                    <label class="form-check-label">@tag.Name</label>
+                <div class="row">
+                    @foreach (var tag in tags)
+                    {
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="TagIds" value="@tag.Id"
+                                       @(Model.TagIds != null && Model.TagIds.Contains(tag.Id) ? "checked" : "") />
+                                <label class="form-check-label">@tag.Name</label>
+                            </div>
+                        </div>
+                    }
                 </div>
             }
-        }
-        else
-        {
-            <p class="alert alert-warning">Brak dostępnych tagów. Dodaj tagi przed dodaniem alkoholu.</p>
-        }
-    </div>
+            else
+            {
+                <div class="alert alert-warning">Brak dostępnych tagów. Dodaj tagi przed dodaniem alkoholu.</div>
+            }
+        </div>
 
-    <div class="form-group">
-        <label asp-for="ImageFile">Obrazek</label>
-        <input asp-for="ImageFile" class="form-control-file" />
-        <span asp-validation-for="ImageFile" class="text-danger"></span>
-    </div>
+        <div class="mb-4">
+            <label asp-for="ImageFile" class="form-label">Obrazek</label>
+            <input asp-for="ImageFile" class="form-control" type="file" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Dodaj Alkohol</button>
-</form>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus-circle me-1"></i> Dodaj Alkohol
+            </button>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

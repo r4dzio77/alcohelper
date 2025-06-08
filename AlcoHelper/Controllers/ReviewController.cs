@@ -64,15 +64,31 @@ namespace AlcoHelper.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var reviews = await _context.Reviews
+            ViewBag.SortOrder = sortOrder;
+
+            var reviews = _context.Reviews
                 .Include(r => r.Alcohol)
                 .Include(r => r.User)
-                .ToListAsync();
+                .AsQueryable();
 
-            return View(reviews);
+            reviews = sortOrder switch
+            {
+                "alcohol_desc" => reviews.OrderByDescending(r => r.Alcohol.Name),
+                "alcohol_asc" => reviews.OrderBy(r => r.Alcohol.Name),
+                "rating_desc" => reviews.OrderByDescending(r => r.Rating),
+                "rating_asc" => reviews.OrderBy(r => r.Rating),
+                "user_desc" => reviews.OrderByDescending(r => r.User.Username),
+                "user_asc" => reviews.OrderBy(r => r.User.Username),
+                "date_desc" => reviews.OrderByDescending(r => r.CreatedAt),
+                "date_asc" => reviews.OrderBy(r => r.CreatedAt),
+                _ => reviews.OrderByDescending(r => r.CreatedAt)
+            };
+
+            return View(await reviews.ToListAsync());
         }
+
 
         public async Task<IActionResult> Details(int id)
         {

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 public class AccountSettingsController : Controller
 {
     private readonly AlcoHelperContext _context;
@@ -18,34 +17,23 @@ public class AccountSettingsController : Controller
     public async Task<IActionResult> Index()
     {
         var userId = HttpContext.Session.GetInt32("UserId");
-        Console.WriteLine($"[DEBUG] UserId z sesji: {userId}");
-
         if (userId == null)
-        {
-            Console.WriteLine("[DEBUG] UserId jest null. Przekierowanie do logowania.");
             return RedirectToAction("Login", "Account");
-        }
 
         var user = await _context.Users.FindAsync(userId.Value);
         if (user == null)
-        {
-            Console.WriteLine($"[DEBUG] Nie znaleziono użytkownika o Id={userId}. Przekierowanie do logowania.");
             return RedirectToAction("Login", "Account");
-        }
-        Console.WriteLine($"[DEBUG] Użytkownik znaleziony: {user.Username} (Id: {user.Id})");
 
         var favorites = await _context.FavoriteAlcos
             .Include(f => f.Alcohol)
             .Where(f => f.UserId == userId.Value)
             .Select(f => f.Alcohol)
             .ToListAsync();
-        Console.WriteLine($"[DEBUG] Znaleziono {favorites.Count} ulubionych alkoholi.");
 
         var reviews = await _context.Reviews
             .Include(r => r.Alcohol)
             .Where(r => r.UserId == userId.Value)
             .ToListAsync();
-        Console.WriteLine($"[DEBUG] Znaleziono {reviews.Count} recenzji użytkownika.");
 
         var model = new AccountSettingsViewModel
         {
@@ -54,22 +42,26 @@ public class AccountSettingsController : Controller
             UserReviews = reviews
         };
 
-        Console.WriteLine("[DEBUG] Przygotowano model dla widoku AccountSettings/Index.");
-
         return View(model);
     }
 
+    public IActionResult ChangePassword()
+    {
+        return View();
+    }
 
-    // POST: /AccountSettings/ChangePassword
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
             return RedirectToAction("Login", "Account");
-
-        if (!ModelState.IsValid)
-            return RedirectToAction("Index");
 
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
@@ -77,24 +69,28 @@ public class AccountSettingsController : Controller
 
         var hasher = new PasswordHasher<User>();
 
-        var verificationResult = hasher.VerifyHashedPassword(user, user.PasswordHash, model.OldPassword);
-        if (verificationResult == PasswordVerificationResult.Failed)
+        // ✅ Sprawdź czy stare hasło pasuje do hasha
+        var result = hasher.VerifyHashedPassword(user, user.PasswordHash, model.OldPassword);
+        if (result == PasswordVerificationResult.Failed)
         {
             TempData["PasswordChangeError"] = "Stare hasło jest niepoprawne.";
-            return RedirectToAction("Index");
+            return View(model);
         }
 
+        // ✅ Sprawdź czy nowe hasła się zgadzają
         if (model.NewPassword != model.ConfirmPassword)
         {
             TempData["PasswordChangeError"] = "Nowe hasła nie są takie same.";
-            return RedirectToAction("Index");
+            return View(model);
         }
 
+        // ✅ Zapisz nowy hash hasła
         user.PasswordHash = hasher.HashPassword(user, model.NewPassword);
         await _context.SaveChangesAsync();
 
         TempData["PasswordChangeSuccess"] = "Hasło zostało zmienione.";
         return RedirectToAction("Index");
     }
+
 
 }
