@@ -1098,77 +1098,113 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\jquery\LICENSE.txt'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\475132500_1357849058862837_2904143170940179664_n.png'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\5cc90393-5029-473f-a25f-2ff0792b4734.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>AlcoHelper</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/AlcoHelper</BasePath>
-      <RelativePath>uploads/475132500_1357849058862837_2904143170940179664_n.png</RelativePath>
+      <RelativePath>uploads/5cc90393-5029-473f-a25f-2ff0792b4734.jpg</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>5fp3ag6faq</Fingerprint>
-      <Integrity>j7KAITfpaMm1lo1ZZVrhyf+TWgELbphFLuD1KibYDlk=</Integrity>
+      <Fingerprint>1c405a64wr</Fingerprint>
+      <Integrity>D/1V9deDvvGMkCLOMJ590dSGUrr/yfRzefvxrd9q/Ac=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\475132500_1357849058862837_2904143170940179664_n.png'))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\5cc90393-5029-473f-a25f-2ff0792b4734.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\486496111_1193028239274387_2102998077581773338_n.png'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\69941f4f-ad71-4897-8e1a-16da7e4638d6.png'))">
       <SourceType>Package</SourceType>
       <SourceId>AlcoHelper</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/AlcoHelper</BasePath>
-      <RelativePath>uploads/486496111_1193028239274387_2102998077581773338_n.png</RelativePath>
+      <RelativePath>uploads/69941f4f-ad71-4897-8e1a-16da7e4638d6.png</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>zlie8sb1su</Fingerprint>
-      <Integrity>ScLWDS/pVyyfzbuyVm32Tt8lSju7Dc9IAaQ1qJ1uWBI=</Integrity>
+      <Fingerprint>s5qvx4nrj5</Fingerprint>
+      <Integrity>0Oh+uwyNZl7LseCXSJ4CslowFQZmZtxlcP64L32Kxxk=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\486496111_1193028239274387_2102998077581773338_n.png'))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\69941f4f-ad71-4897-8e1a-16da7e4638d6.png'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\il_570xN.4572809448_d2il.png'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\82825b52-1954-451f-a8b1-63f03d16778c.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>AlcoHelper</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/AlcoHelper</BasePath>
-      <RelativePath>uploads/il_570xN.4572809448_d2il.png</RelativePath>
+      <RelativePath>uploads/82825b52-1954-451f-a8b1-63f03d16778c.jpg</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>vyszkjk690</Fingerprint>
-      <Integrity>Z/1fk8tKAWVTbbfY3Nwas47kSWR0KR6LB2zBKoNq7Aw=</Integrity>
+      <Fingerprint>4lcpfxtfyv</Fingerprint>
+      <Integrity>CNEFVKvnhXy4K8HTS87/BVkE98k0KMuC/vPaPSCzzFw=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\il_570xN.4572809448_d2il.png'))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\82825b52-1954-451f-a8b1-63f03d16778c.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\obraz_2025-05-31_140438522.png'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\BAILEYS-Irish-Cream-22.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>AlcoHelper</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/AlcoHelper</BasePath>
-      <RelativePath>uploads/obraz_2025-05-31_140438522.png</RelativePath>
+      <RelativePath>uploads/BAILEYS-Irish-Cream-22.jpg</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>7gkb4ar1cn</Fingerprint>
-      <Integrity>RxgWu0Pb2n4bya9EfE0k0+2ZveGlfm7mBzQSCUP2weI=</Integrity>
+      <Fingerprint>qljuq4es6d</Fingerprint>
+      <Integrity>QndpDjEXyMHl2tEofC2ffpmYguGO5vmKriQI4bs0sAI=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\obraz_2025-05-31_140438522.png'))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\BAILEYS-Irish-Cream-22.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\bg-alcohol.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>AlcoHelper</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/AlcoHelper</BasePath>
+      <RelativePath>uploads/bg-alcohol.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>rbia0n4e22</Fingerprint>
+      <Integrity>uQjW5qlbiI2li4kOG1WXYoQnh0Ex3bPco8FRPOxLDV0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\bg-alcohol.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\profesjonalna-degustacja-wina.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>AlcoHelper</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/AlcoHelper</BasePath>
+      <RelativePath>uploads/profesjonalna-degustacja-wina.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>8rabqkwyuv</Fingerprint>
+      <Integrity>NLW3sJtpxXN0LP+hfplpOHXnvgHzOYuh77GkdcMoY70=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\profesjonalna-degustacja-wina.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\singleton_12.jpeg'))">
       <SourceType>Package</SourceType>
@@ -1187,6 +1223,60 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\singleton_12.jpeg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\SZAMPAN-MOET--CHANDON-BRUT-IMPERIAL-0,75L.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>AlcoHelper</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/AlcoHelper</BasePath>
+      <RelativePath>uploads/SZAMPAN-MOET--CHANDON-BRUT-IMPERIAL-0,75L.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>h842pyu8o6</Fingerprint>
+      <Integrity>Dx2OjnNhCVzP0z6+5mruVzvY4DieuoCB9/D8gPy+SCs=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\SZAMPAN-MOET--CHANDON-BRUT-IMPERIAL-0,75L.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\tps220303yp_011-dassai-23.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>AlcoHelper</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/AlcoHelper</BasePath>
+      <RelativePath>uploads/tps220303yp_011-dassai-23.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>5fnx71hhi2</Fingerprint>
+      <Integrity>L7BNLBGTccGvU08qLj5UGaguevo74CskIJJknWlzEFI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\tps220303yp_011-dassai-23.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\Zubrovka-bison-ins.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>AlcoHelper</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/AlcoHelper</BasePath>
+      <RelativePath>uploads/Zubrovka-bison-ins.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>108f2tejo5</Fingerprint>
+      <Integrity>QUzg+LbuYe52JMUGmmQczykRHhFr+05yq7p/qdjzHoY=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\Zubrovka-bison-ins.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

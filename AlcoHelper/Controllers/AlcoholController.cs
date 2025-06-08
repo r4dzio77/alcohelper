@@ -122,7 +122,7 @@ namespace AlcoHelper.Controllers
                     Description = model.Description,
                     ImageUrl = imageFilePath,
                     AddedDate = DateTime.Now,
-                    IsApproved = false
+                    IsApproved = role == "Admin" ? true : false
                 };
 
                 _context.Alcohols.Add(alcohol);
@@ -154,6 +154,41 @@ namespace AlcoHelper.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var userName = HttpContext.Session.GetString("UserName");
+            var role = HttpContext.Session.GetString("Role");
+            ViewBag.UserName = userName;
+            ViewBag.Role = role;
+
+            var alcohol = _context.Alcohols.FirstOrDefault(a => a.Id == id);
+            if (alcohol == null)
+            {
+                TempData["Error"] = "Nie znaleziono alkoholu do usunięcia.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Usuń powiązane tagi
+            var tags = _context.AlcoholTags.Where(at => at.AlcoholId == id);
+            _context.AlcoholTags.RemoveRange(tags);
+
+            // Usuń obrazek jak trzeba
+            if (!string.IsNullOrEmpty(alcohol.ImageUrl))
+            {
+                var fullImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", alcohol.ImageUrl.TrimStart('/'));
+                if (System.IO.File.Exists(fullImagePath))
+                {
+                    System.IO.File.Delete(fullImagePath);
+                }
+            }
+
+            _context.Alcohols.Remove(alcohol);
+            _context.SaveChanges();
+
+            TempData["Message"] = "Alkohol usunięty z bazy.";
+            return RedirectToAction("Index", "Home");
+        }
 
         public IActionResult PendingApproval()
         {
@@ -407,12 +442,5 @@ namespace AlcoHelper.Controllers
 
             return Ok();
         }
-
-
-
-
-
-
-
     }
 }

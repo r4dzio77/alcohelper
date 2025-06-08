@@ -245,24 +245,44 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\475132500_1357849058862837_2904143170940179664_n.png",
-      "PackagePath": "staticwebassets\\uploads\\475132500_1357849058862837_2904143170940179664_n.png"
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\5cc90393-5029-473f-a25f-2ff0792b4734.jpg",
+      "PackagePath": "staticwebassets\\uploads\\5cc90393-5029-473f-a25f-2ff0792b4734.jpg"
     },
     {
-      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\486496111_1193028239274387_2102998077581773338_n.png",
-      "PackagePath": "staticwebassets\\uploads\\486496111_1193028239274387_2102998077581773338_n.png"
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\69941f4f-ad71-4897-8e1a-16da7e4638d6.png",
+      "PackagePath": "staticwebassets\\uploads\\69941f4f-ad71-4897-8e1a-16da7e4638d6.png"
     },
     {
-      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\il_570xN.4572809448_d2il.png",
-      "PackagePath": "staticwebassets\\uploads\\il_570xN.4572809448_d2il.png"
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\82825b52-1954-451f-a8b1-63f03d16778c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\82825b52-1954-451f-a8b1-63f03d16778c.jpg"
     },
     {
-      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\obraz_2025-05-31_140438522.png",
-      "PackagePath": "staticwebassets\\uploads\\obraz_2025-05-31_140438522.png"
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\BAILEYS-Irish-Cream-22.jpg",
+      "PackagePath": "staticwebassets\\uploads\\BAILEYS-Irish-Cream-22.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\SZAMPAN-MOET--CHANDON-BRUT-IMPERIAL-0,75L.png",
+      "PackagePath": "staticwebassets\\uploads\\SZAMPAN-MOET--CHANDON-BRUT-IMPERIAL-0,75L.png"
+    },
+    {
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\Zubrovka-bison-ins.jpg",
+      "PackagePath": "staticwebassets\\uploads\\Zubrovka-bison-ins.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\bg-alcohol.jpg",
+      "PackagePath": "staticwebassets\\uploads\\bg-alcohol.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\profesjonalna-degustacja-wina.jpg",
+      "PackagePath": "staticwebassets\\uploads\\profesjonalna-degustacja-wina.jpg"
     },
     {
       "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\singleton_12.jpeg",
       "PackagePath": "staticwebassets\\uploads\\singleton_12.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\Mateusz\\Projects\\alcohelper\\AlcoHelper\\wwwroot\\uploads\\tps220303yp_011-dassai-23.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tps220303yp_011-dassai-23.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.AlcoHelper.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

@@ -173,6 +173,13 @@
                                     <a href="@Url.Action("Edit", "Alcohol", new { id = alcohol.Id })" class="btn btn-warning btn-sm ml-1">
                                         <i class="fas fa-edit"></i>
                                     </a>
+                                    <a href="#" onclick="if(confirm('Na pewno chcesz wywalić ten alkohol?')) { document.getElementById('deleteForm-@alcohol.Id').submit(); }" 
+                                        class="btn btn-danger btn-sm ml-1">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    <form id="deleteForm-@alcohol.Id" method="post" asp-action="Delete" asp-controller="Alcohol" asp-route-id="@alcohol.Id" style="display:none;">
+                                        @Html.AntiForgeryToken()
+                                    </form>
                                 }
                             </div>
                         </div>
@@ -186,21 +193,23 @@
 <hr class="mt-5" />
 <h3 class="mb-3 text-success font-weight-bold">Nie wiesz co wybrać? Zapytaj naszego sommeliera!</h3>
 
-<form method="post" action="@Url.Action("Index", "Chat")" class="mb-4">
-    <div class="form-group">
-        <textarea name="userMessage" class="form-control" rows="3" placeholder="Opisz swoje preferencje..."></textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Zadaj pytanie</button>
-</form>
-
-@if (ViewBag.UserMessage != null && ViewBag.BotResponse != null)
+<p class="mb-4">
+    Opowiedz mu o swoich preferencjach, budżecie i okazji – doradzi jak zawodowiec.
+</p>
+@if (Context.Session.GetString("UserName") != null)
+    {
+        <a href="@Url.Action("Index", "Chat")" class="btn btn-success btn-lg">
+            Przejdź do chatu z sommelierem
+        </a>
+    }
+else
 {
-    <div class="alert alert-secondary">
-        <strong>Ty:</strong> @ViewBag.UserMessage
-        <br />
-        <strong>Sommelier:</strong> @Html.Raw(ViewBag.BotResponse.Replace("\n", "<br />"))
-    </div>
+    <a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-lg">
+        Zaloguj się, aby korzystać z chatu
+    </a>
 }
+
+
 
 @section Scripts {
     <script>
