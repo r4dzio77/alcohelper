@@ -10,7 +10,7 @@ namespace AlcoHelper.Controllers
 
         public ChatController()
         {
-            _chatService = new GroqChatService("KLUCZ_API_GROQ");
+            _chatService = new GroqChatService("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");
         }
 
         private List<JsonObject> GetChatHistory()

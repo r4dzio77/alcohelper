@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AlcoHelper.Data; // <- to jest Twoja przestrzeń nazw kontekstu
+using AlcoHelper.Data;
 using AlcoHelper.Models;
 
 namespace AlcoHelper.Controllers.Api

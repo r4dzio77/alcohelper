@@ -36,11 +36,18 @@
 
 <form method="post" action="@Url.Action("Index", "Chat")" class="d-flex" onsubmit="clearAfterSubmit()">
     <textarea name="userMessage" id="userMessage" class="form-control me-2" rows="1" placeholder="Napisz wiadomość..." style="resize: none;"></textarea>
-    <button type="submit" class="btn btn-success">Wyślij</button>
+    <button type="submit" id="sendBtn" class="btn btn-success" disabled>Wyślij</button>
 </form>
 
 @section Scripts {
     <script>
+        const textarea = document.getElementById('userMessage');
+        const btn = document.getElementById('sendBtn');
+
+        textarea.addEventListener('input',() => {
+            btn.disabled = textarea.value.trim() === '';
+        });
+
         // Automatyczne przewijanie do dołu
         window.onload = function() {
             var container = document.getElementById('chatContainer');

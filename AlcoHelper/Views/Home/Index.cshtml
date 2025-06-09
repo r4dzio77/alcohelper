@@ -80,6 +80,11 @@
         padding: 15px;
         margin-top: 20px;
     }
+
+    .d-flex.align-items-center.mt-2.gap-3 {
+    justify-content: center !important;
+    }
+
 </style>
 
 <div class="text-center">
@@ -93,8 +98,8 @@
             {
                 new SelectListItem { Value = "name_asc", Text = "Nazwa rosnąco", Selected = sortOrder == "name_asc" },
                         new SelectListItem { Value = "name_desc", Text = "Nazwa malejąco", Selected = sortOrder == "name_desc" },
-                        new SelectListItem { Value = "alcohol_asc", Text = "Alkohol rosnąco", Selected = sortOrder == "alcohol_asc" },
-                        new SelectListItem { Value = "alcohol_desc", Text = "Alkohol malejąco", Selected = sortOrder == "alcohol_desc" }
+                        new SelectListItem { Value = "alcohol_asc", Text = "%vol. rosnąco", Selected = sortOrder == "alcohol_asc" },
+                        new SelectListItem { Value = "alcohol_desc", Text = "%vol. malejąco", Selected = sortOrder == "alcohol_desc" }
                         }, new { @class = "form-control form-control-sm mr-2", style = "width: 160px;" })
             <button type="submit" class="btn btn-primary">Szukaj</button>
         </form>
@@ -102,21 +107,39 @@
 
     <div class="border rounded p-3 mb-4 bg-light" style="max-width: 900px; margin: 0 auto;">
         <strong>Filtruj po tagach:</strong>
-        <form method="get" action="@Url.Action("Index", "Home")">
+        <form method="get" action="@Url.Action("Index", "Home")" class="position-relative">
             <input type="hidden" name="searchTerm" value="@ViewBag.SearchTerm" />
             <input type="hidden" name="sortOrder" value="@sortOrder" />
-            <div class="form-group d-flex flex-wrap mt-2">
-                @foreach (var tag in tags)
-                {
-                    <label class="tag-checkbox">
-                        <input type="checkbox" name="selectedTagIds" value="@tag.Id" @(selectedTagIds.Contains(tag.Id) ? "checked" : "") />
-                        @tag.Name
-                    </label>
-                }
+
+            <div class="d-flex align-items-center mt-2 gap-3">
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="tagsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span id="dropdownLabel">Wybierz tagi</span>
+                    </button>
+                    <ul class="dropdown-menu p-3" aria-labelledby="tagsDropdown" style="max-height: 200px; overflow-y: auto; min-width: 200px;">
+                        @foreach (var tag in tags)
+                        {
+                            <li>
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input me-1" name="selectedTagIds" value="@tag.Id" @(selectedTagIds.Contains(tag.Id) ? "checked" : "") />
+                                    @tag.Name
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <button type="button" id="clearFiltersBtn" class="btn btn-outline-danger btn-sm">Wyczyść filtry</button>
             </div>
+
+            <div class="mt-2" id="selectedTagsDisplay" style="min-height: 1.5em; font-weight: 600; color: #333;">
+                <!-- Tu będą wypisane wybrane tagi -->
+            </div>
+
             <button type="submit" class="btn btn-secondary btn-sm mt-2">Filtruj</button>
         </form>
     </div>
+
 
     @if (Model == null || !Model.Any())
     {
@@ -251,5 +274,36 @@ else
                 });
             });
         });
+        const checkboxes = document.querySelectorAll('input[name="selectedTagIds"]');
+        const dropdownLabel = document.getElementById('dropdownLabel');
+        const selectedTagsDisplay = document.getElementById('selectedTagsDisplay');
+        const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+        function updateSelectedTags() {
+            const selected = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) selected.push(cb.nextSibling.textContent.trim());
+            });
+
+            if (selected.length === 0) {
+                dropdownLabel.textContent = 'Wybierz tagi';
+                selectedTagsDisplay.textContent = 'Brak wybranych tagów';
+            } else {
+                dropdownLabel.textContent = `Wybrano (${selected.length})`;
+                selectedTagsDisplay.textContent = selected.join(', ');
+            }
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', updateSelectedTags);
+        });
+
+        clearFiltersBtn.addEventListener('click', () => {
+            checkboxes.forEach(cb => cb.checked = false);
+            updateSelectedTags();
+        });
+
+        // Init przy ładowaniu strony
+        updateSelectedTags();
     </script>
 }

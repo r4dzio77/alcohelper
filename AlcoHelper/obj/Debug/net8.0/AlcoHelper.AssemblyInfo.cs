@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlcoHelper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d32df0c338a622a42047c2c158287b8a9518c26d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f1b2dceaa2cfbba6dfa7c19c841cd0ccce22edf")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlcoHelper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlcoHelper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

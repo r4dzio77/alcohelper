@@ -53,7 +53,7 @@ public class AdminController : Controller
     [HttpPost]
     public IActionResult UpdateUserRoles(Dictionary<int, int> RolesForUsers)
     {
-        var currentUserId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
+        var currentUserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
         
         if (RolesForUsers == null || !RolesForUsers.Any())
         {
@@ -124,6 +124,18 @@ public class AdminController : Controller
             await _context.SaveChangesAsync();
         }
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteUser(int id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user != null)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+        return RedirectToAction("ManageUsers");
     }
 
     private bool AlcoholExists(int id)
